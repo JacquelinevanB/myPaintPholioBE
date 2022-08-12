@@ -1,4 +1,4 @@
-package nl.jvb.mypaintpholiobe.models;
+package nl.jvb.mypaintpholiobe.domain.models;
 
 public enum Role {
     ADMIN,
