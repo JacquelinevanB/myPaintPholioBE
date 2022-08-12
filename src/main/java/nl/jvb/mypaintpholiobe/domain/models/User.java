@@ -8,15 +8,15 @@ public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, unique = true)
+//    @Column(nullable = false, unique = true)
     private String username;
-    @Column(nullable = false, length = 50)
+//    @Column(nullable = false, length = 50)
     private String password;
-    @Column(nullable = false, length = 50)
+//    @Column(nullable = false, length = 50)
     private String firstName;
-    @Column(nullable = false, length = 50)
+//    @Column(nullable = false, length = 50)
     private String lastName;
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String emailAddress;
 
     public Long getId() {

@@ -6,6 +6,9 @@ public class StudentDto {
     private String firstName;
     private String lastName;
     private String emailAddress;
+    private TeacherDto teacherDto;
+
+
 
     public Long getId() {
         return id;
@@ -27,6 +30,10 @@ public class StudentDto {
         return emailAddress;
     }
 
+    public TeacherDto getTeacherDto() {
+        return teacherDto;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -46,5 +53,7 @@ public class StudentDto {
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
     }
+
+    public void setTeacherDto(TeacherDto teacherDto) { this.teacherDto = teacherDto; }
 
 }

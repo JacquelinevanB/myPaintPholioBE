@@ -25,7 +25,7 @@ public class TeacherService {
         List<Teacher> teacherList = teacherRepository.findAll();
         List<TeacherDto> teacherDtoList = new ArrayList<>();
         for(Teacher teacher : teacherList) {
-            TeacherDto dto = newTeacherToDto(teacher);
+            TeacherDto dto = teacherToDto(teacher);
             teacherDtoList.add(dto);
         }
         return teacherDtoList;
@@ -34,7 +34,7 @@ public class TeacherService {
     public TeacherDto getTeacherById(Long id) {
         if (teacherRepository.findById(id).isPresent()) {
             Teacher teacher = teacherRepository.findById(id).get();
-            return newTeacherToDto(teacher);
+            return teacherToDto(teacher);
         } else {
             throw new RecordNotFoundException("ID '" + id + "' was not found.");
         }
@@ -43,7 +43,7 @@ public class TeacherService {
     public TeacherDto createTeacher(CreateTeacherDto createTeacherDto) {
         Teacher teacher = createNewTeacher(createTeacherDto);
         teacherRepository.save(teacher);
-        return newTeacherToDto(teacher);
+        return teacherToDto(teacher);
     }
 
     public TeacherDto updateTeacher(Long id, CreateTeacherDto createTeacherDto) {
@@ -55,7 +55,7 @@ public class TeacherService {
 
             teacherRepository.save(newInfo);
 
-            return newTeacherToDto(newInfo);
+            return teacherToDto(newInfo);
         }
         throw new RecordNotFoundException("ID '" + id + "' was not found.");
     }
@@ -79,7 +79,7 @@ public class TeacherService {
         return teacher;
     }
 
-    public TeacherDto newTeacherToDto(Teacher teacher) {
+    public static TeacherDto teacherToDto(Teacher teacher) {
         TeacherDto dto = new TeacherDto();
 
         dto.setId(teacher.getId());
