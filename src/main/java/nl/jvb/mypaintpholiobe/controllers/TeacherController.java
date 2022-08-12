@@ -45,7 +45,7 @@ public class TeacherController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateTelevision(
+    public ResponseEntity<Object> updateTeacher(
             @PathVariable("id") Long id,
             @RequestBody CreateTeacherDto createTeacherDto) {
         TeacherDto teacher = teacherService.updateTeacher(id, createTeacherDto);

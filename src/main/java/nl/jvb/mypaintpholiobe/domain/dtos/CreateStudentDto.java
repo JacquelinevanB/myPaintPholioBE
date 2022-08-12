@@ -1,18 +1,25 @@
 package nl.jvb.mypaintpholiobe.domain.dtos;
 
-public class StudentDto {
-    private Long id;
+public class CreateStudentDto {
+//    @NotEmpty
+//    @Size(min = 3, max = 50)
     private String username;
+//    @NotEmpty
+//    @Size(min = 8, max = 50)
+    private String password;
     private String firstName;
     private String lastName;
+//    @NotEmpty
+//    @Email
     private String emailAddress;
 
-    public Long getId() {
-        return id;
-    }
 
     public String getUsername() {
         return username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getFirstName() {
@@ -27,12 +34,12 @@ public class StudentDto {
         return emailAddress;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setFirstName(String firstName) {

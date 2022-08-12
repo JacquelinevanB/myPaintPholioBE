@@ -49,12 +49,12 @@ public class TeacherService {
         if (teacherRepository.findById(id).isPresent()) {
 
             Teacher oldInfo = teacherRepository.findById(id).get();
-            Teacher newTvInfo = createNewTeacher(createTeacherDto);
-            newTvInfo.setId(oldInfo.getId());
+            Teacher newInfo = createNewTeacher(createTeacherDto);
+            newInfo.setId(oldInfo.getId());
 
-            teacherRepository.save(newTvInfo);
+            teacherRepository.save(newInfo);
 
-            return newTeacherToDto(newTvInfo);
+            return newTeacherToDto(newInfo);
         }
         throw new RecordNotFoundException("ID '" + id + "' was not found.");
     }
