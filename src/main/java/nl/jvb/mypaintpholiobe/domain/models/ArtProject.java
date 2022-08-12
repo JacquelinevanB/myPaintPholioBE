@@ -1,4 +1,4 @@
-package nl.jvb.mypaintpholiobe.models;
+package nl.jvb.mypaintpholiobe.domain.models;
 
 import javax.persistence.*;
 import java.util.Date;
