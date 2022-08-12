@@ -35,8 +35,9 @@ public class TeacherService {
         if (teacherRepository.findById(id).isPresent()) {
             Teacher teacher = teacherRepository.findById(id).get();
             return newTeacherToDto(teacher);
+        } else {
+            throw new RecordNotFoundException("ID '" + id + "' was not found.");
         }
-        throw new RecordNotFoundException("ID '" + id + "' was not found.");
     }
 
     public TeacherDto createTeacher(CreateTeacherDto createTeacherDto) {
