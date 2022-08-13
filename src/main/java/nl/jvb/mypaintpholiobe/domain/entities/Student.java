@@ -25,6 +25,4 @@ public class Student extends User{
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
     }
-
-
 }
