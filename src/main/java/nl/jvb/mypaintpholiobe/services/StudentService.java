@@ -17,9 +17,7 @@ import java.util.List;
 public class StudentService {
 
     private final StudentRepository studentRepository;
-
     private final TeacherRepository teacherRepository;
-
     private final TeacherService teacherService;
 
     @Autowired
@@ -35,11 +33,11 @@ public class StudentService {
 
     public List<StudentDto> getAllStudents() {
         List<Student> studentList = studentRepository.findAll();
-
         List<StudentDto> studentDtoList = new ArrayList<>();
-
         for(Student student : studentList) {
+
             StudentDto dto = studentToDto(student);
+
             if(student.getTeacher() != null) {
                 dto.setTeacherDto(teacherService.teacherToDto(student.getTeacher()));
             }
@@ -50,12 +48,15 @@ public class StudentService {
 
     public StudentDto getStudentById(Long id) {
         if (studentRepository.findById(id).isPresent()) {
+
             Student student = studentRepository.findById(id).get();
+
             StudentDto dto = studentToDto(student);
+
             if(student.getTeacher() != null) {
                 dto.setTeacherDto(teacherService.teacherToDto(student.getTeacher()));
             }
-            return studentToDto(student);
+            return dto;
         } else {
             throw new RecordNotFoundException("Geen student gevonden.");
         }
@@ -69,13 +70,10 @@ public class StudentService {
 
     public StudentDto updateStudent(Long id, CreateStudentDto createStudentDto) {
         if (studentRepository.findById(id).isPresent()) {
-
             Student oldInfo = studentRepository.findById(id).get();
             Student newInfo = createNewStudent(createStudentDto);
             newInfo.setId(oldInfo.getId());
-
             studentRepository.save(newInfo);
-
             return studentToDto(newInfo);
         } else {
             throw new RecordNotFoundException("Geen student gevonden.");
@@ -91,7 +89,7 @@ public class StudentService {
     }
 
     public Student createNewStudent(CreateStudentDto dto) {
-        var student = new Student();
+        Student student = new Student();
 
         student.setUsername(dto.getUsername());
         student.setPassword(dto.getPassword());
@@ -114,7 +112,7 @@ public class StudentService {
         return dto;
     }
 
-    public void assignTeacherToStudent(Long id, Long teacherId) {
+    public Student assignTeacherToStudent(Long id, Long teacherId) {
         var optionalStudent = studentRepository.findById(id);
         var optionalTeacher = teacherRepository.findById(teacherId);
 
@@ -124,6 +122,8 @@ public class StudentService {
 
             student.setTeacher(teacher);
             studentRepository.save(student);
+
+            return student;
         } else {
             throw new RecordNotFoundException();
         }

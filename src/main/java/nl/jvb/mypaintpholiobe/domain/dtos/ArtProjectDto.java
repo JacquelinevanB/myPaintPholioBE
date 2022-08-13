@@ -9,11 +9,13 @@ public class ArtProjectDto {
     private Date dateStart;
     private Date dateEnd;
     private String inspiration;
-    private Integer height;
-    private Integer width;
+    private int height;
+    private int width;
     private String description;
     private String subject;
     private Boolean isFinished = false;
+    private Long studentId;
+    private StudentDto studentDto;
 
 
     public Long getId() {
@@ -60,6 +62,12 @@ public class ArtProjectDto {
         return isFinished;
     }
 
+    public Long getStudentId() { return studentId; }
+
+    public StudentDto getStudentDto() {
+        return studentDto;
+    }
+
 
     public void setId(Long id) {
         this.id = id;
@@ -103,6 +111,12 @@ public class ArtProjectDto {
 
     public void setFinished(Boolean finished) {
         isFinished = finished;
+    }
+
+    public void setStudentId(Long studentId) { this.studentId = studentId; }
+
+    public void setStudentDto(StudentDto studentDto) {
+        this.studentDto = studentDto;
     }
 
 }

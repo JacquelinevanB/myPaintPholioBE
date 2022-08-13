@@ -1,7 +1,6 @@
 package nl.jvb.mypaintpholiobe.controllers;
 
 import nl.jvb.mypaintpholiobe.domain.dtos.ArtProjectDto;
-import nl.jvb.mypaintpholiobe.domain.dtos.CreateArtProjectDto;
 import nl.jvb.mypaintpholiobe.domain.entities.ArtProject;
 import nl.jvb.mypaintpholiobe.services.ArtProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +35,8 @@ public class ArtProjectController {
 
     @PostMapping
     public ResponseEntity<ArtProjectDto> createArtProject(
-            @RequestBody CreateArtProjectDto createArtProjectDto) {
-        final ArtProjectDto newProject = artProjectService.createArtProject(createArtProjectDto);
+            @RequestBody ArtProjectDto artProjectDto) {
+        final ArtProjectDto newProject = artProjectService.createArtProject(artProjectDto);
         final URI location = URI.create("/artprojects/" + newProject.getId());
         return ResponseEntity.created(location).body(newProject);
     }
@@ -45,8 +44,8 @@ public class ArtProjectController {
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateArtProject(
             @PathVariable("id") Long id,
-            @RequestBody CreateArtProjectDto createArtProjectDto) {
-        ArtProjectDto projectDto = artProjectService.updateArtProject(id, createArtProjectDto);
+            @RequestBody ArtProjectDto artProjectDto) {
+        ArtProjectDto projectDto = artProjectService.updateArtProject(id, artProjectDto);
         return ResponseEntity.ok().body(projectDto);
     }
 

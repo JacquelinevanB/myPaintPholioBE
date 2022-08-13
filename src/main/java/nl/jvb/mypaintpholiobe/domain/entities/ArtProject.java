@@ -4,11 +4,9 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "art_projects")
 public class ArtProject {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     private String title;
@@ -22,6 +20,12 @@ public class ArtProject {
     private String subject;
     private Boolean isFinished = false;
 
+    private Long studentId;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "student")
+    private Student student;
+    //student not null??
 
     public Long getId() {
         return id;
@@ -67,6 +71,13 @@ public class ArtProject {
         return isFinished;
     }
 
+    public Long getStudentId() {
+        return studentId;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -112,4 +123,11 @@ public class ArtProject {
         isFinished = finished;
     }
 
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
 }
