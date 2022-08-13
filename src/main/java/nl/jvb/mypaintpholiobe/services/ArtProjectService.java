@@ -23,8 +23,7 @@ public class ArtProjectService {
     public ArtProjectService(
             ArtProjectRepository artProjectRepository,
             StudentRepository studentRepository,
-            StudentService studentService
-        ) {
+            StudentService studentService) {
         this.artProjectRepository = artProjectRepository;
         this.studentRepository = studentRepository;
         this.studentService =studentService;

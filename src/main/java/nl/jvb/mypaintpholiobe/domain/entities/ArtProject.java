@@ -1,12 +1,16 @@
 package nl.jvb.mypaintpholiobe.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
+@Table(name = "projects")
 public class ArtProject {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title;
@@ -19,8 +23,11 @@ public class ArtProject {
     private String description;
     private String subject;
     private Boolean isFinished = false;
-
     private Long studentId;
+
+    @OneToMany(mappedBy = "artProject", cascade = CascadeType.ALL)
+    @JsonIgnore
+    List<Comment> comments;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "student")
@@ -79,6 +86,11 @@ public class ArtProject {
         return student;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -129,5 +141,9 @@ public class ArtProject {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }
