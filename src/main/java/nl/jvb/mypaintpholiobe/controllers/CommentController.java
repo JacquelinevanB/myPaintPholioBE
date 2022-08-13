@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/comments")
@@ -19,6 +21,19 @@ public class CommentController {
     public CommentController(CommentService commentService) {
         this.commentService = commentService;
     }
+
+//    @GetMapping
+//    public ResponseEntity<List<CommentDto>> getAllComments(
+//            @RequestParam(value = "projectId", required = false) Optional<Long> projectId) {
+//        List<CommentDto> dtos;
+//
+//        if (projectId.isEmpty()) {
+//            dtos = commentService.getAllComments();
+//        } else {
+//            dtos = commentService.getAllCommentsByProject(projectId.get());
+//        }
+//        return ResponseEntity.ok().body(dtos);
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<CommentDto> getCommentById(@PathVariable("id") Long id) {

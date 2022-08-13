@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "comments")
 public class Comment {
 
     @Id
@@ -13,6 +14,12 @@ public class Comment {
     private String author;
     private String commentText;
     private Date dateOfComment;
+    private Long projectId;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "artproject_id")
+    private ArtProject artProject;
+
 
     public Long getId() {
         return id;
@@ -30,6 +37,15 @@ public class Comment {
         return dateOfComment;
     }
 
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public ArtProject getArtProject() {
+        return artProject;
+    }
+
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -44,5 +60,13 @@ public class Comment {
 
     public void setDateOfComment(Date dateOfComment) {
         this.dateOfComment = dateOfComment;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
+    }
+
+    public void setArtProject(ArtProject artProject) {
+        this.artProject = artProject;
     }
 }

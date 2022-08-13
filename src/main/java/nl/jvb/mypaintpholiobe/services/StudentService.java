@@ -48,11 +48,8 @@ public class StudentService {
 
     public StudentDto getStudentById(Long id) {
         if (studentRepository.findById(id).isPresent()) {
-
             Student student = studentRepository.findById(id).get();
-
             StudentDto dto = studentToDto(student);
-
             if(student.getTeacher() != null) {
                 dto.setTeacherDto(teacherService.teacherToDto(student.getTeacher()));
             }

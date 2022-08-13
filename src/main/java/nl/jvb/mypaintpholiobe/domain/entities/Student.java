@@ -19,6 +19,11 @@ public class Student extends User{
     private Teacher teacher;
 
     public List<ArtProject> getArtProjects() { return artProjects; }
+
+    public void setArtProjects(List<ArtProject> artProjects) {
+        this.artProjects = artProjects;
+    }
+
     public Teacher getTeacher() {
         return teacher;
     }
