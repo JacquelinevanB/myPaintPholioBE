@@ -19,6 +19,11 @@ public abstract class User {
 //    @Column(nullable = false)
     private String emailAddress;
 
+
+    @OneToOne
+    FileUploadResponse photo;
+
+
     public Long getId() {
         return id;
     }
@@ -41,6 +46,10 @@ public abstract class User {
 
     public String getEmailAddress() {
         return emailAddress;
+    }
+
+    public FileUploadResponse getPhoto() {
+        return photo;
     }
 
     public void setId(Long id) {
@@ -67,4 +76,7 @@ public abstract class User {
         this.emailAddress = emailAddress;
     }
 
+    public void setPhoto(FileUploadResponse photo) {
+        this.photo = photo;
+    }
 }
