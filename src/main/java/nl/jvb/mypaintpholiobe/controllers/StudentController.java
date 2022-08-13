@@ -2,7 +2,7 @@ package nl.jvb.mypaintpholiobe.controllers;
 
 import nl.jvb.mypaintpholiobe.domain.dtos.CreateStudentDto;
 import nl.jvb.mypaintpholiobe.domain.dtos.StudentDto;
-import nl.jvb.mypaintpholiobe.domain.models.Student;
+import nl.jvb.mypaintpholiobe.domain.entities.Student;
 import nl.jvb.mypaintpholiobe.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

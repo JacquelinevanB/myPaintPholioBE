@@ -2,7 +2,7 @@ package nl.jvb.mypaintpholiobe.services;
 
 import nl.jvb.mypaintpholiobe.domain.dtos.CreateTeacherDto;
 import nl.jvb.mypaintpholiobe.domain.dtos.TeacherDto;
-import nl.jvb.mypaintpholiobe.domain.models.Teacher;
+import nl.jvb.mypaintpholiobe.domain.entities.Teacher;
 import nl.jvb.mypaintpholiobe.exceptions.RecordNotFoundException;
 import nl.jvb.mypaintpholiobe.repositories.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,35 +36,33 @@ public class TeacherService {
             Teacher teacher = teacherRepository.findById(id).get();
             return teacherToDto(teacher);
         } else {
-            throw new RecordNotFoundException("ID '" + id + "' was not found.");
+            throw new RecordNotFoundException("Docent is niet gevonden.");
         }
     }
 
     public TeacherDto createTeacher(CreateTeacherDto createTeacherDto) {
-        Teacher teacher = createNewTeacher(createTeacherDto);
-        teacherRepository.save(teacher);
+        Teacher teacher = teacherRepository.save(createNewTeacher(createTeacherDto));
         return teacherToDto(teacher);
     }
 
     public TeacherDto updateTeacher(Long id, CreateTeacherDto createTeacherDto) {
         if (teacherRepository.findById(id).isPresent()) {
-
             Teacher oldInfo = teacherRepository.findById(id).get();
             Teacher newInfo = createNewTeacher(createTeacherDto);
             newInfo.setId(oldInfo.getId());
-
             teacherRepository.save(newInfo);
-
             return teacherToDto(newInfo);
+        } else {
+            throw new RecordNotFoundException("Docent is niet gevonden.");
         }
-        throw new RecordNotFoundException("ID '" + id + "' was not found.");
     }
 
     public void deleteTeacherById(@RequestBody Long id) {
         if (teacherRepository.findById(id).isPresent()) {
             teacherRepository.deleteById(id);
+        } else {
+            throw new RecordNotFoundException("Docent is niet gevonden.");
         }
-        throw new RecordNotFoundException("ID '" + id + "' was not found.");
     }
 
     public Teacher createNewTeacher(CreateTeacherDto dto) {
@@ -90,6 +88,4 @@ public class TeacherService {
 
         return dto;
     }
-
-
 }

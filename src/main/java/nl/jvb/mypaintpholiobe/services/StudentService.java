@@ -2,7 +2,7 @@ package nl.jvb.mypaintpholiobe.services;
 
 import nl.jvb.mypaintpholiobe.domain.dtos.CreateStudentDto;
 import nl.jvb.mypaintpholiobe.domain.dtos.StudentDto;
-import nl.jvb.mypaintpholiobe.domain.models.Student;
+import nl.jvb.mypaintpholiobe.domain.entities.Student;
 import nl.jvb.mypaintpholiobe.exceptions.RecordNotFoundException;
 import nl.jvb.mypaintpholiobe.repositories.StudentRepository;
 import nl.jvb.mypaintpholiobe.repositories.TeacherRepository;

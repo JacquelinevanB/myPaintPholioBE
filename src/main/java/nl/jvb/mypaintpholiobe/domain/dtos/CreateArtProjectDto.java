@@ -1,30 +1,20 @@
-package nl.jvb.mypaintpholiobe.domain.models;
+package nl.jvb.mypaintpholiobe.domain.dtos;
 
-import javax.persistence.*;
 import java.util.Date;
 
-@Entity
-@Table(name = "artprojects_by_student")
-public class ArtProject {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class CreateArtProjectDto {
 
     private String title;
     private String mediumType;
     private Date dateStart;
     private Date dateEnd;
     private String inspiration;
-    private int height = 0;
-    private int width = 0;
+    private int height;
+    private int width;
     private String description;
     private String subject;
     private Boolean isFinished = false;
 
-    public Long getId() {
-        return id;
-    }
 
     public String getTitle() {
         return title;
@@ -66,9 +56,6 @@ public class ArtProject {
         return isFinished;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public void setTitle(String title) {
         this.title = title;
@@ -109,4 +96,5 @@ public class ArtProject {
     public void setFinished(Boolean finished) {
         isFinished = finished;
     }
+
 }

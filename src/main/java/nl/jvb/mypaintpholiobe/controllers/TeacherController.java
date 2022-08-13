@@ -2,7 +2,7 @@ package nl.jvb.mypaintpholiobe.controllers;
 
 import nl.jvb.mypaintpholiobe.domain.dtos.CreateTeacherDto;
 import nl.jvb.mypaintpholiobe.domain.dtos.TeacherDto;
-import nl.jvb.mypaintpholiobe.domain.models.Teacher;
+import nl.jvb.mypaintpholiobe.domain.entities.Teacher;
 import nl.jvb.mypaintpholiobe.services.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
