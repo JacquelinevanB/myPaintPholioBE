@@ -1,10 +1,11 @@
 package nl.jvb.mypaintpholiobe.domain.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class FileUploadResponse {
-
+    @Id
     private String fileName;
     private String contentType;
     private String url;
@@ -15,8 +16,8 @@ public class FileUploadResponse {
         this.url = url;
     }
 
-    public FileUploadResponse() {
-    }
+    public FileUploadResponse() { }
+
 
     public String getFileName() {
         return fileName;
@@ -30,9 +31,8 @@ public class FileUploadResponse {
         return url;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
+
+    public void setFileName(String fileName) { this.fileName = fileName; }
 
     public void setContentType(String contentType) {
         this.contentType = contentType;

@@ -2,8 +2,11 @@ package nl.jvb.mypaintpholiobe.services;
 
 import nl.jvb.mypaintpholiobe.domain.dtos.ArtProjectDto;
 import nl.jvb.mypaintpholiobe.domain.entities.ArtProject;
+import nl.jvb.mypaintpholiobe.domain.entities.FileUploadResponse;
+import nl.jvb.mypaintpholiobe.domain.entities.Student;
 import nl.jvb.mypaintpholiobe.exceptions.RecordNotFoundException;
 import nl.jvb.mypaintpholiobe.repositories.ArtProjectRepository;
+import nl.jvb.mypaintpholiobe.repositories.FileUploadRepository;
 import nl.jvb.mypaintpholiobe.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ArtProjectService {
@@ -18,15 +23,17 @@ public class ArtProjectService {
     private final ArtProjectRepository artProjectRepository;
     private final StudentRepository studentRepository;
     private final StudentService studentService;
+    private final FileUploadRepository fileUploadRepository;
 
     @Autowired
-    public ArtProjectService(
-            ArtProjectRepository artProjectRepository,
-            StudentRepository studentRepository,
-            StudentService studentService) {
+    public ArtProjectService(ArtProjectRepository artProjectRepository,
+                             StudentRepository studentRepository,
+                             StudentService studentService,
+                             FileUploadRepository fileUploadRepository) {
         this.artProjectRepository = artProjectRepository;
         this.studentRepository = studentRepository;
         this.studentService =studentService;
+        this.fileUploadRepository = fileUploadRepository;
     }
 
     public List<ArtProjectDto> getAllProjects() {
@@ -120,5 +127,18 @@ public class ArtProjectService {
         dto.setStudentId(project.getStudentId());
 
         return dto;
+    }
+
+    public void assignPhotoToProject(String fileName, Long artProjectId) {
+        Optional<ArtProject> optionalProject = artProjectRepository.findById(artProjectId);
+        Optional<FileUploadResponse> optionalPhoto = fileUploadRepository.findByFileName(fileName);
+        if (optionalProject.isPresent() && optionalPhoto.isPresent()) {
+            FileUploadResponse photo = optionalPhoto.get();
+            ArtProject project = optionalProject.get();
+            Set<FileUploadResponse> list = project.getFileUploadResponses();
+            list.add(photo);
+            project.setFileUploadResponses(list);
+            artProjectRepository.save(project);
+        }
     }
 }

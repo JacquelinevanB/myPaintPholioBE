@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "projects")
@@ -28,6 +29,10 @@ public class ArtProject {
     @OneToMany(mappedBy = "artProject", cascade = CascadeType.ALL)
     @JsonIgnore
     List<Comment> comments;
+
+    @OneToMany
+    @JoinColumn(name = "art_project_id")
+    Set<FileUploadResponse> fileUploadResponses;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "student")
@@ -90,6 +95,9 @@ public class ArtProject {
         return comments;
     }
 
+    public Set<FileUploadResponse> getFileUploadResponses() {
+        return fileUploadResponses;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -145,5 +153,9 @@ public class ArtProject {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public void setFileUploadResponses(Set<FileUploadResponse> fileUploadResponses) {
+        this.fileUploadResponses = fileUploadResponses;
     }
 }

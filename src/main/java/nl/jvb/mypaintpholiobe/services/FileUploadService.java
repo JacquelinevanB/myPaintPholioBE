@@ -27,52 +27,43 @@ public class FileUploadService {
     private final FileUploadRepository fileUploadRepository;
 
     public FileUploadService(@Value("/Users/jacqu/IdeaProjects/myPaintPholioBE/uploads")
-                              String fileStorageLocation,
+                             String fileStorageLocation,
                              FileUploadRepository fileUploadRepository) {
         fileStoragePath = Paths.get(fileStorageLocation).toAbsolutePath().normalize();
-
         this.fileStorageLocation = fileStorageLocation;
         this.fileUploadRepository = fileUploadRepository;
 
         try {
             Files.createDirectories(fileStoragePath);
         } catch (IOException e) {
-            throw new RuntimeException("Issue in creating file directory.");
+            throw new RuntimeException("Probleem met creëren van de file directory.", e);
         }
     }
 
     public String storeFile(MultipartFile file, String url) {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
-
         Path filePath = Paths.get(fileStoragePath + "\\" + fileName);
-
         try {
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            throw new RuntimeException("Issue in storing the file.", e);
+            throw new RuntimeException("Probleem met opslaan van het bestand.", e);
         }
-
         fileUploadRepository.save(new FileUploadResponse(fileName, file.getContentType(), url));
-
         return fileName;
     }
 
-    public Resource downLoadFile(String fileName) {
-
+    public Resource downloadFile(String fileName) {
         Path path = Paths.get(fileStorageLocation).toAbsolutePath().resolve(fileName);
-
         Resource resource;
-
         try {
             resource = new UrlResource(path.toUri());
         } catch (MalformedURLException e) {
-            throw new RuntimeException("Issue in reading the file.", e);
+            throw new RuntimeException("Probleem met lezen van het bestand.", e);
         }
-
         if(resource.exists() && resource.isReadable()) {
             return resource;
         } else {
-            throw new RuntimeException("The file doesn't exist or is not readable.");
+            throw new RuntimeException("Het bestand bestaat niet of kan niet gelezen worden.");
         }
     }
 }

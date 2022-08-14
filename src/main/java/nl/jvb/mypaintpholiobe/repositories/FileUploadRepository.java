@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface FileUploadRepository extends JpaRepository<FileUploadResponse, String> {
 
-    Optional<FileUploadResponse> findByFileName(String filename);
+    Optional<FileUploadResponse> findByFileName(String fileName);
 }

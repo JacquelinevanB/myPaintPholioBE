@@ -2,10 +2,12 @@ package nl.jvb.mypaintpholiobe.controllers;
 
 import nl.jvb.mypaintpholiobe.domain.dtos.ArtProjectDto;
 import nl.jvb.mypaintpholiobe.domain.entities.ArtProject;
+import nl.jvb.mypaintpholiobe.domain.entities.FileUploadResponse;
 import nl.jvb.mypaintpholiobe.services.ArtProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 import java.util.List;
@@ -15,10 +17,13 @@ import java.util.List;
 public class ArtProjectController {
 
     private final ArtProjectService artProjectService;
+    private final FileUploadController fileUploadController;
 
     @Autowired
-    public ArtProjectController(ArtProjectService artProjectService) {
+    public ArtProjectController(ArtProjectService artProjectService,
+                                FileUploadController fileUploadController) {
         this.artProjectService = artProjectService;
+        this.fileUploadController = fileUploadController;
     }
 
     @GetMapping
@@ -39,6 +44,13 @@ public class ArtProjectController {
         final ArtProjectDto newProject = artProjectService.createArtProject(artProjectDto);
         final URI location = URI.create("/artprojects/" + newProject.getId());
         return ResponseEntity.created(location).body(newProject);
+    }
+
+    @PostMapping("/{id}/photo")
+    public void assignPhotoToProject(@PathVariable("id") Long projectId,
+                                     @RequestBody MultipartFile file) {
+        FileUploadResponse photo = fileUploadController.singleFileUpload(file);
+        artProjectService.assignPhotoToProject(photo.getFileName(), projectId);
     }
 
     @PutMapping("/{id}")

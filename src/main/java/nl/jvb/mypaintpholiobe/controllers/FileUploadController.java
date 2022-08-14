@@ -26,9 +26,10 @@ public class FileUploadController {
 
     @PostMapping("/upload")
     FileUploadResponse singleFileUpload(@RequestParam("file") MultipartFile file) {
+        // next line will make the url (example "http://localhost:8080/download/naam.jpg")
         String url = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
-                .path("/download")
+                .path("/download/")
                 .path(Objects.requireNonNull(file.getOriginalFilename()))
                 .toUriString();
         String contentType = file.getContentType();
@@ -37,8 +38,8 @@ public class FileUploadController {
     }
 
     @GetMapping("/download/{fileName}")
-    ResponseEntity<Resource> downLoadSingleFile(@PathVariable String fileName, HttpServletRequest request) {
-        Resource resource = fileUploadService.downLoadFile(fileName);
+    ResponseEntity<Resource> downloadSingleFile(@PathVariable String fileName, HttpServletRequest request) {
+        Resource resource = fileUploadService.downloadFile(fileName);
 //        this mediaType decides witch type you accept if you only accept 1 type
 //        MediaType contentType = MediaType.IMAGE_JPEG;
 //        this is going to accept multiple types
