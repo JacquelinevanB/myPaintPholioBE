@@ -28,11 +28,11 @@ public class ArtProject {
 
     @OneToMany(mappedBy = "artProject", cascade = CascadeType.ALL)
     @JsonIgnore
-    List<Comment> comments;
+    List<CommentElement> commentElements;
 
-    @OneToMany
-    @JoinColumn(name = "art_project_id")
-    Set<FileUploadResponse> fileUploadResponses;
+    @OneToMany(mappedBy = "artProject", cascade = CascadeType.ALL)
+    @JsonIgnore
+    List<PhotoElement> photoElements;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "student")
@@ -91,12 +91,12 @@ public class ArtProject {
         return student;
     }
 
-    public List<Comment> getComments() {
-        return comments;
+    public List<CommentElement> getCommentElements() {
+        return commentElements;
     }
 
-    public Set<FileUploadResponse> getFileUploadResponses() {
-        return fileUploadResponses;
+    public List<PhotoElement> getPhotoElements() {
+        return photoElements;
     }
 
     public void setId(Long id) {
@@ -151,11 +151,11 @@ public class ArtProject {
         this.student = student;
     }
 
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
+    public void setCommentElements(List<CommentElement> commentElements) {
+        this.commentElements = commentElements;
     }
 
-    public void setFileUploadResponses(Set<FileUploadResponse> fileUploadResponses) {
-        this.fileUploadResponses = fileUploadResponses;
+    public void setPhotoElements(List<PhotoElement> photoElements) {
+        this.photoElements = photoElements;
     }
 }

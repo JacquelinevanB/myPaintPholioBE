@@ -13,7 +13,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/artprojects")
+@RequestMapping("/projects")
 public class ArtProjectController {
 
     private final ArtProjectService artProjectService;
@@ -42,15 +42,8 @@ public class ArtProjectController {
     public ResponseEntity<ArtProjectDto> createArtProject(
             @RequestBody ArtProjectDto artProjectDto) {
         final ArtProjectDto newProject = artProjectService.createArtProject(artProjectDto);
-        final URI location = URI.create("/artprojects/" + newProject.getId());
+        final URI location = URI.create("/projects/" + newProject.getId());
         return ResponseEntity.created(location).body(newProject);
-    }
-
-    @PostMapping("/{id}/photo")
-    public void assignPhotoToProject(@PathVariable("id") Long projectId,
-                                     @RequestBody MultipartFile file) {
-        FileUploadResponse photo = fileUploadController.singleFileUpload(file);
-        artProjectService.assignPhotoToProject(photo.getFileName(), projectId);
     }
 
     @PutMapping("/{id}")
