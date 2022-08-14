@@ -2,23 +2,30 @@ package nl.jvb.mypaintpholiobe.services;
 
 import nl.jvb.mypaintpholiobe.domain.dtos.CreateTeacherDto;
 import nl.jvb.mypaintpholiobe.domain.dtos.TeacherDto;
+import nl.jvb.mypaintpholiobe.domain.entities.FileUploadResponse;
+import nl.jvb.mypaintpholiobe.domain.entities.Student;
 import nl.jvb.mypaintpholiobe.domain.entities.Teacher;
 import nl.jvb.mypaintpholiobe.exceptions.RecordNotFoundException;
+import nl.jvb.mypaintpholiobe.repositories.FileUploadRepository;
 import nl.jvb.mypaintpholiobe.repositories.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TeacherService {
 
     private final TeacherRepository teacherRepository;
+    private final FileUploadRepository fileUploadRepository;
 
     @Autowired
-    public TeacherService(TeacherRepository teacherRepository) {
+    public TeacherService(TeacherRepository teacherRepository,
+                          FileUploadRepository fileUploadRepository) {
         this.teacherRepository = teacherRepository;
+        this.fileUploadRepository = fileUploadRepository;
     }
 
     public List<TeacherDto> getAllTeachers() {
@@ -87,5 +94,16 @@ public class TeacherService {
         dto.setLastName(teacher.getLastName());
 
         return dto;
+    }
+
+    public void assignPhotoToTeacher(String fileName, Long teacherId) {
+        Optional<Teacher> optionalTeacher = teacherRepository.findById(teacherId);
+        Optional<FileUploadResponse> optionalPhoto = fileUploadRepository.findByFileName(fileName);
+        if (optionalTeacher.isPresent() && optionalPhoto.isPresent()) {
+            FileUploadResponse photo = optionalPhoto.get();
+            Teacher teacher = optionalTeacher.get();
+            teacher.setFile(photo);
+            teacherRepository.save(teacher);
+        }
     }
 }

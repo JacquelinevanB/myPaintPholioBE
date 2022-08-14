@@ -2,8 +2,10 @@ package nl.jvb.mypaintpholiobe.services;
 
 import nl.jvb.mypaintpholiobe.domain.dtos.ArtProjectDto;
 import nl.jvb.mypaintpholiobe.domain.entities.ArtProject;
+import nl.jvb.mypaintpholiobe.domain.entities.FileUploadResponse;
 import nl.jvb.mypaintpholiobe.exceptions.RecordNotFoundException;
 import nl.jvb.mypaintpholiobe.repositories.ArtProjectRepository;
+import nl.jvb.mypaintpholiobe.repositories.FileUploadRepository;
 import nl.jvb.mypaintpholiobe.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ArtProjectService {
@@ -20,10 +24,9 @@ public class ArtProjectService {
     private final StudentService studentService;
 
     @Autowired
-    public ArtProjectService(
-            ArtProjectRepository artProjectRepository,
-            StudentRepository studentRepository,
-            StudentService studentService) {
+    public ArtProjectService(ArtProjectRepository artProjectRepository,
+                             StudentRepository studentRepository,
+                             StudentService studentService) {
         this.artProjectRepository = artProjectRepository;
         this.studentRepository = studentRepository;
         this.studentService =studentService;

@@ -1,6 +1,7 @@
 package nl.jvb.mypaintpholiobe.domain.entities;
 
 import javax.persistence.*;
+import java.util.Optional;
 
 @MappedSuperclass
 public abstract class User {
@@ -18,6 +19,11 @@ public abstract class User {
     private String lastName;
 //    @Column(nullable = false)
     private String emailAddress;
+
+
+    @OneToOne
+    FileUploadResponse file;
+
 
     public Long getId() {
         return id;
@@ -41,6 +47,10 @@ public abstract class User {
 
     public String getEmailAddress() {
         return emailAddress;
+    }
+
+    public FileUploadResponse getFile() {
+        return file;
     }
 
     public void setId(Long id) {
@@ -67,4 +77,7 @@ public abstract class User {
         this.emailAddress = emailAddress;
     }
 
+    public void setFile(FileUploadResponse file) {
+        this.file = file;
+    }
 }

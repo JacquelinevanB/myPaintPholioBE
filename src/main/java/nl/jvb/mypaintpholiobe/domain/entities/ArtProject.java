@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "projects")
@@ -27,7 +28,11 @@ public class ArtProject {
 
     @OneToMany(mappedBy = "artProject", cascade = CascadeType.ALL)
     @JsonIgnore
-    List<Comment> comments;
+    List<CommentElement> commentElements;
+
+    @OneToMany(mappedBy = "artProject", cascade = CascadeType.ALL)
+    @JsonIgnore
+    List<PhotoElement> photoElements;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "student")
@@ -86,10 +91,13 @@ public class ArtProject {
         return student;
     }
 
-    public List<Comment> getComments() {
-        return comments;
+    public List<CommentElement> getCommentElements() {
+        return commentElements;
     }
 
+    public List<PhotoElement> getPhotoElements() {
+        return photoElements;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -143,7 +151,11 @@ public class ArtProject {
         this.student = student;
     }
 
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
+    public void setCommentElements(List<CommentElement> commentElements) {
+        this.commentElements = commentElements;
+    }
+
+    public void setPhotoElements(List<PhotoElement> photoElements) {
+        this.photoElements = photoElements;
     }
 }

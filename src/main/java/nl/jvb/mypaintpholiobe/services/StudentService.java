@@ -2,8 +2,10 @@ package nl.jvb.mypaintpholiobe.services;
 
 import nl.jvb.mypaintpholiobe.domain.dtos.CreateStudentDto;
 import nl.jvb.mypaintpholiobe.domain.dtos.StudentDto;
+import nl.jvb.mypaintpholiobe.domain.entities.FileUploadResponse;
 import nl.jvb.mypaintpholiobe.domain.entities.Student;
 import nl.jvb.mypaintpholiobe.exceptions.RecordNotFoundException;
+import nl.jvb.mypaintpholiobe.repositories.FileUploadRepository;
 import nl.jvb.mypaintpholiobe.repositories.StudentRepository;
 import nl.jvb.mypaintpholiobe.repositories.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentService {
@@ -19,16 +22,17 @@ public class StudentService {
     private final StudentRepository studentRepository;
     private final TeacherRepository teacherRepository;
     private final TeacherService teacherService;
+    private final FileUploadRepository fileUploadRepository;
 
     @Autowired
-    public StudentService(
-            StudentRepository studentRepository,
-            TeacherRepository teacherRepository,
-            TeacherService teacherService
-        ) {
+    public StudentService(StudentRepository studentRepository,
+                          TeacherRepository teacherRepository,
+                          TeacherService teacherService,
+                          FileUploadRepository fileUploadRepository) {
         this.studentRepository = studentRepository;
         this.teacherRepository = teacherRepository;
         this.teacherService = teacherService;
+        this.fileUploadRepository = fileUploadRepository;
     }
 
     public List<StudentDto> getAllStudents() {
@@ -41,6 +45,7 @@ public class StudentService {
             if(student.getTeacher() != null) {
                 dto.setTeacherDto(teacherService.teacherToDto(student.getTeacher()));
             }
+//            if(student.getProfilePhoto() != null)
             studentDtoList.add(dto);
         }
         return studentDtoList;
@@ -60,8 +65,7 @@ public class StudentService {
     }
 
     public StudentDto createStudent(CreateStudentDto createStudentDto) {
-        Student student = createNewStudent(createStudentDto);
-        studentRepository.save(student);
+        Student student = studentRepository.save(createNewStudent(createStudentDto));
         return studentToDto(student);
     }
 
@@ -112,17 +116,25 @@ public class StudentService {
     public Student assignTeacherToStudent(Long id, Long teacherId) {
         var optionalStudent = studentRepository.findById(id);
         var optionalTeacher = teacherRepository.findById(teacherId);
-
         if(optionalStudent.isPresent() && optionalTeacher.isPresent()) {
             var student = optionalStudent.get();
             var teacher = optionalTeacher.get();
-
             student.setTeacher(teacher);
             studentRepository.save(student);
-
             return student;
         } else {
             throw new RecordNotFoundException();
+        }
+    }
+
+    public void assignPhotoToStudent(String name, Long studentId) {
+        Optional<Student> optionalStudent = studentRepository.findById(studentId);
+        Optional<FileUploadResponse> optionalPhoto = fileUploadRepository.findByFileName(name);
+        if (optionalStudent.isPresent() && optionalPhoto.isPresent()) {
+            FileUploadResponse photo = optionalPhoto.get();
+            Student student = optionalStudent.get();
+            student.setFile(photo);
+            studentRepository.save(student);
         }
     }
 }
