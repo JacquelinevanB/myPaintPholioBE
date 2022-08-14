@@ -1,15 +1,27 @@
-package nl.jvb.mypaintpholiobe.domain.dtos;
+package nl.jvb.mypaintpholiobe.domain.entities;
 
+import javax.persistence.*;
 import java.util.Date;
 
-public class CommentDto {
+@Entity
+@Table(name = "comments")
+public class CommentElement {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String author;
     private String commentText;
     private Date dateOfComment;
-    private ArtProjectDto artProjectDto;
-    public Long projectId;
+    private Long projectId;
+
+    @OneToOne(mappedBy = "commentElement")
+    PhotoElement photoElement;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "artproject_id")
+    private ArtProject artProject;
 
 
     public Long getId() {
@@ -32,12 +44,14 @@ public class CommentDto {
         return projectId;
     }
 
-    public ArtProjectDto getArtProjectDto() {
-        return artProjectDto;
+    public ArtProject getArtProject() {
+        return artProject;
     }
 
 
-    public void setId(Long id) { this.id = id; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public void setAuthor(String author) {
         this.author = author;
@@ -55,7 +69,7 @@ public class CommentDto {
         this.projectId = projectId;
     }
 
-    public void setArtProjectDto(ArtProjectDto artProjectDto) {
-        this.artProjectDto = artProjectDto;
+    public void setArtProject(ArtProject artProject) {
+        this.artProject = artProject;
     }
 }

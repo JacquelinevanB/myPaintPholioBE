@@ -3,7 +3,6 @@ package nl.jvb.mypaintpholiobe.services;
 import nl.jvb.mypaintpholiobe.domain.dtos.ArtProjectDto;
 import nl.jvb.mypaintpholiobe.domain.entities.ArtProject;
 import nl.jvb.mypaintpholiobe.domain.entities.FileUploadResponse;
-import nl.jvb.mypaintpholiobe.domain.entities.Student;
 import nl.jvb.mypaintpholiobe.exceptions.RecordNotFoundException;
 import nl.jvb.mypaintpholiobe.repositories.ArtProjectRepository;
 import nl.jvb.mypaintpholiobe.repositories.FileUploadRepository;
@@ -23,17 +22,14 @@ public class ArtProjectService {
     private final ArtProjectRepository artProjectRepository;
     private final StudentRepository studentRepository;
     private final StudentService studentService;
-    private final FileUploadRepository fileUploadRepository;
 
     @Autowired
     public ArtProjectService(ArtProjectRepository artProjectRepository,
                              StudentRepository studentRepository,
-                             StudentService studentService,
-                             FileUploadRepository fileUploadRepository) {
+                             StudentService studentService) {
         this.artProjectRepository = artProjectRepository;
         this.studentRepository = studentRepository;
         this.studentService =studentService;
-        this.fileUploadRepository = fileUploadRepository;
     }
 
     public List<ArtProjectDto> getAllProjects() {
@@ -127,18 +123,5 @@ public class ArtProjectService {
         dto.setStudentId(project.getStudentId());
 
         return dto;
-    }
-
-    public void assignPhotoToProject(String fileName, Long artProjectId) {
-        Optional<ArtProject> optionalProject = artProjectRepository.findById(artProjectId);
-        Optional<FileUploadResponse> optionalPhoto = fileUploadRepository.findByFileName(fileName);
-        if (optionalProject.isPresent() && optionalPhoto.isPresent()) {
-            FileUploadResponse photo = optionalPhoto.get();
-            ArtProject project = optionalProject.get();
-            Set<FileUploadResponse> list = project.getFileUploadResponses();
-            list.add(photo);
-            project.setFileUploadResponses(list);
-            artProjectRepository.save(project);
-        }
     }
 }
