@@ -13,48 +13,51 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/projects")
 public class ArtProjectController {
 
     private final ArtProjectService artProjectService;
-    private final FileUploadController fileUploadController;
 
     @Autowired
-    public ArtProjectController(ArtProjectService artProjectService,
-                                FileUploadController fileUploadController) {
+    public ArtProjectController(ArtProjectService artProjectService) {
         this.artProjectService = artProjectService;
-        this.fileUploadController = fileUploadController;
     }
 
-    @GetMapping
+    @GetMapping("/projects")
     public ResponseEntity<List<ArtProjectDto>> getAllProjects() {
         List<ArtProjectDto> allProjects = artProjectService.getAllProjects();
         return ResponseEntity.ok().body(allProjects);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{user_id}/projects")
+    public ResponseEntity<List<ArtProjectDto>> getAllProjectsByUserId(@RequestParam(value = "userId") Long userId) {
+        List<ArtProjectDto> userProjects;
+        userProjects = artProjectService.getAllProjectsByUserId(userId);
+        return ResponseEntity.ok().body(userProjects);
+    }
+
+    @GetMapping("/projects/{id}")
     public ResponseEntity<ArtProjectDto> getArtProjectById(@PathVariable("id") Long id) {
         ArtProjectDto oneProject = artProjectService.getArtProjectById(id);
         return ResponseEntity.ok().body(oneProject);
     }
 
-    @PostMapping
-    public ResponseEntity<ArtProjectDto> createArtProject(
-            @RequestBody ArtProjectDto artProjectDto) {
-        final ArtProjectDto newProject = artProjectService.createArtProject(artProjectDto);
+    @PostMapping("/add_project/{user_id}")
+    public ResponseEntity<ArtProjectDto> createArtProject(@RequestBody ArtProjectDto artProjectDto,
+                                                          @PathVariable Long userId) {
+        final ArtProjectDto newProject = artProjectService.createArtProject(artProjectDto, userId);
         final URI location = URI.create("/projects/" + newProject.getId());
+//        final URI location = URI.create("/users/" + newProject.getUserId() + "/" + newProject.getId());
         return ResponseEntity.created(location).body(newProject);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updateArtProject(
-            @PathVariable("id") Long id,
-            @RequestBody ArtProjectDto artProjectDto) {
+    @PutMapping("/projects/{id}")
+    public ResponseEntity<Object> updateArtProject(@PathVariable("id") Long id,
+                                                   @RequestBody ArtProjectDto artProjectDto) {
         ArtProjectDto projectDto = artProjectService.updateArtProject(id, artProjectDto);
         return ResponseEntity.ok().body(projectDto);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/projects/{id}")
     public ResponseEntity<ArtProject> deleteArtProject(@PathVariable("id") Long id) {
         artProjectService.deleteArtProjectById(id);
         return ResponseEntity.noContent().build();

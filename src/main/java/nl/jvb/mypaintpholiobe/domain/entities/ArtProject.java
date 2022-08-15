@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "projects")
 public class ArtProject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,20 +24,16 @@ public class ArtProject {
     private String description;
     private String subject;
     private Boolean isFinished = false;
-    private Long studentId;
+
 
     @OneToMany(mappedBy = "artProject", cascade = CascadeType.ALL)
     @JsonIgnore
-    List<CommentElement> commentElements;
+    private Set<ProjectUpdate> projectUpdates = new HashSet<>();
 
-    @OneToMany(mappedBy = "artProject", cascade = CascadeType.ALL)
     @JsonIgnore
-    List<PhotoElement> photoElements;
-
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "student")
-    private Student student;
-    //student not null??
+    private User user;
+
 
     public Long getId() {
         return id;
@@ -82,22 +78,14 @@ public class ArtProject {
     public Boolean getFinished() {
         return isFinished;
     }
-
-    public Long getStudentId() {
-        return studentId;
+    public User getUser() {
+        return user;
     }
 
-    public Student getStudent() {
-        return student;
+    public Set<ProjectUpdate> getProjectUpdates() {
+        return projectUpdates;
     }
 
-    public List<CommentElement> getCommentElements() {
-        return commentElements;
-    }
-
-    public List<PhotoElement> getPhotoElements() {
-        return photoElements;
-    }
 
     public void setId(Long id) {
         this.id = id;
@@ -143,19 +131,11 @@ public class ArtProject {
         isFinished = finished;
     }
 
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public void setCommentElements(List<CommentElement> commentElements) {
-        this.commentElements = commentElements;
-    }
-
-    public void setPhotoElements(List<PhotoElement> photoElements) {
-        this.photoElements = photoElements;
+    public void setProjectUpdates(Set<ProjectUpdate> projectUpdates) {
+        this.projectUpdates = projectUpdates;
     }
 }

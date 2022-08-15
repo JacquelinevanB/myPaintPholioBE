@@ -1,10 +1,13 @@
 package nl.jvb.mypaintpholiobe.domain.entities;
 
 import javax.persistence.*;
-import java.util.Optional;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-@MappedSuperclass
-public abstract class User {
+@Entity
+@Table(name = "users")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +26,9 @@ public abstract class User {
 
     @OneToOne
     FileUploadResponse file;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<ArtProject> artProjects = new HashSet<>();
 
 
     public Long getId() {
@@ -53,6 +59,10 @@ public abstract class User {
         return file;
     }
 
+    public Set<ArtProject> getArtProjects() {
+        return artProjects;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -79,5 +89,9 @@ public abstract class User {
 
     public void setFile(FileUploadResponse file) {
         this.file = file;
+    }
+
+    public void setArtProjects(Set<ArtProject> artProjects) {
+        this.artProjects = artProjects;
     }
 }
