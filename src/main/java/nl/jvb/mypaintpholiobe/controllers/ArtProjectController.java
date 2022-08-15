@@ -17,13 +17,10 @@ import java.util.List;
 public class ArtProjectController {
 
     private final ArtProjectService artProjectService;
-    private final FileUploadController fileUploadController;
 
     @Autowired
-    public ArtProjectController(ArtProjectService artProjectService,
-                                FileUploadController fileUploadController) {
+    public ArtProjectController(ArtProjectService artProjectService) {
         this.artProjectService = artProjectService;
-        this.fileUploadController = fileUploadController;
     }
 
     @GetMapping
@@ -31,6 +28,13 @@ public class ArtProjectController {
         List<ArtProjectDto> allProjects = artProjectService.getAllProjects();
         return ResponseEntity.ok().body(allProjects);
     }
+
+//    @GetMapping("/{user_id}")
+//    public ResponseEntity<List<ArtProjectDto>> getAllProjectsByUserId(@RequestParam(value = "userId") Long userId) {
+//        List<ArtProjectDto> userProjects;
+//        userProjects = artProjectService.getAllProjectsByUserId(userId.get());
+//        return ResponseEntity.ok().body(userProjects);
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<ArtProjectDto> getArtProjectById(@PathVariable("id") Long id) {
@@ -42,7 +46,7 @@ public class ArtProjectController {
     public ResponseEntity<ArtProjectDto> createArtProject(
             @RequestBody ArtProjectDto artProjectDto) {
         final ArtProjectDto newProject = artProjectService.createArtProject(artProjectDto);
-        final URI location = URI.create("/projects/" + newProject.getId());
+        final URI location = URI.create("/users/" + newProject.getUserId() + "/" + newProject.getId());
         return ResponseEntity.created(location).body(newProject);
     }
 

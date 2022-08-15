@@ -2,34 +2,30 @@ package nl.jvb.mypaintpholiobe.services;
 
 import nl.jvb.mypaintpholiobe.domain.dtos.ArtProjectDto;
 import nl.jvb.mypaintpholiobe.domain.entities.ArtProject;
-import nl.jvb.mypaintpholiobe.domain.entities.FileUploadResponse;
 import nl.jvb.mypaintpholiobe.exceptions.RecordNotFoundException;
 import nl.jvb.mypaintpholiobe.repositories.ArtProjectRepository;
-import nl.jvb.mypaintpholiobe.repositories.FileUploadRepository;
-import nl.jvb.mypaintpholiobe.repositories.StudentRepository;
+import nl.jvb.mypaintpholiobe.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class ArtProjectService {
 
     private final ArtProjectRepository artProjectRepository;
-    private final StudentRepository studentRepository;
-    private final StudentService studentService;
+    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
     public ArtProjectService(ArtProjectRepository artProjectRepository,
-                             StudentRepository studentRepository,
-                             StudentService studentService) {
+                             UserRepository userRepository,
+                             UserService userService) {
         this.artProjectRepository = artProjectRepository;
-        this.studentRepository = studentRepository;
-        this.studentService =studentService;
+        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     public List<ArtProjectDto> getAllProjects() {
@@ -37,20 +33,33 @@ public class ArtProjectService {
         List<ArtProjectDto> projectDtoList = new ArrayList<>();
         for(ArtProject artProject : projectList) {
             ArtProjectDto dto = artProjectToDto(artProject);
-            if(artProject.getStudent() != null) {
-                dto.setStudentDto(studentService.studentToDto(artProject.getStudent()));
+            if(artProject.getUser() != null) {
+                dto.setUserDto(userService.userToDto(artProject.getUser()));
             }
             projectDtoList.add(dto);
         }
         return projectDtoList;
     }
 
+//    public List<ArtProjectDto> getAllProjectsByStudentId(Long studentId) {
+//        List<ArtProject> projectList = artProjectRepository.findArtProjectsByStudentId(Long studentId);
+//        List<ArtProjectDto> projectDtoList = new ArrayList<>();
+//        for(ArtProject artProject : projectList) {
+//            ArtProjectDto dto = artProjectToDto(artProject);
+//            if(artProject.getStudent() != null) {
+//                dto.setStudentDto(studentService.studentToDto(artProject.getStudent()));
+//            }
+//            projectDtoList.add(dto);
+//        }
+//        return projectDtoList;
+//    }
+
     public ArtProjectDto getArtProjectById(Long id) {
         if (artProjectRepository.findById(id).isPresent()) {
             ArtProject project = artProjectRepository.findById(id).get();
             ArtProjectDto dto = artProjectToDto(project);
-            if(project.getStudent() != null) {
-                dto.setStudentDto(studentService.studentToDto(project.getStudent()));
+            if(project.getUser() != null) {
+                dto.setUserDto(userService.userToDto(project.getUser()));
             }
             return dto;
         } else {
@@ -60,11 +69,12 @@ public class ArtProjectService {
 
     public ArtProjectDto createArtProject(ArtProjectDto projectDto) {
         ArtProject project = dtoToArtProject(projectDto);
-        var student = studentRepository.findById(project.getStudentId());
-        project.setStudent(student.get());
+//        de studentId zou uit de JWT gehaald kunnen worden (ingelogde gebruiker)
+        var user = userRepository.findById(project.getUserId());
+        project.setUser(user.get());
         artProjectRepository.save(project);
         ArtProjectDto dto = artProjectToDto(project);
-        dto.setStudentDto(studentService.studentToDto(project.getStudent()));
+        dto.setUserDto(userService.userToDto(project.getUser()));
         return dto;
     }
 
@@ -101,7 +111,7 @@ public class ArtProjectService {
         project.setDescription(dto.getDescription());
         project.setSubject(dto.getSubject());
         project.setFinished(dto.getFinished());
-        project.setStudentId(dto.getStudentId());
+        project.setUserId(dto.getUserId());
 
         return project;
     }
@@ -120,7 +130,7 @@ public class ArtProjectService {
         dto.setDescription(project.getDescription());
         dto.setSubject(project.getSubject());
         dto.setFinished(project.getFinished());
-        dto.setStudentId(project.getStudentId());
+        dto.setUserId(project.getUserId());
 
         return dto;
     }

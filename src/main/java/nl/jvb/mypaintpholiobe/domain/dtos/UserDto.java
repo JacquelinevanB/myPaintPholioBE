@@ -1,12 +1,11 @@
 package nl.jvb.mypaintpholiobe.domain.dtos;
 
-public class StudentDto {
+public class UserDto {
     private Long id;
     private String username;
     private String firstName;
     private String lastName;
     private String emailAddress;
-    private TeacherDto teacherDto;
 
 
 
@@ -30,10 +29,6 @@ public class StudentDto {
         return emailAddress;
     }
 
-    public TeacherDto getTeacherDto() {
-        return teacherDto;
-    }
-
 
     public void setId(Long id) {
         this.id = id;
@@ -54,7 +49,5 @@ public class StudentDto {
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
     }
-
-    public void setTeacherDto(TeacherDto teacherDto) { this.teacherDto = teacherDto; }
 
 }

@@ -1,10 +1,13 @@
 package nl.jvb.mypaintpholiobe.domain.entities;
 
-import javax.persistence.*;
-import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@MappedSuperclass
-public abstract class User {
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
+@Table(name = "users")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +27,15 @@ public abstract class User {
     @OneToOne
     FileUploadResponse file;
 
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    @JsonIgnore
+    List<ArtProject> artProjects;
+
+    public List<ArtProject> getArtProjects() { return artProjects; }
+
+    public void setArtProjects(List<ArtProject> artProjects) {
+        this.artProjects = artProjects;
+    }
 
     public Long getId() {
         return id;

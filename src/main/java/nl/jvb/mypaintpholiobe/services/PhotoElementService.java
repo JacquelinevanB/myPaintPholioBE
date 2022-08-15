@@ -29,13 +29,13 @@ public class PhotoElementService {
     }
 
     public List<PhotoElementDto> getAllPhotos() {
-        List<PhotoElement> PhotoElementList = photoElementRepository.findAll();
-        return transferPhotoListToDtoList(PhotoElementList);
+        List<PhotoElement> list = photoElementRepository.findAll();
+        return transferPhotoListToDtoList(list);
     }
 
     public List<PhotoElementDto> getAllPhotosByProject(Long projectId) {
-        List<PhotoElement> photoElementList = photoElementRepository.findAllPhotosByArtProjectId(projectId);
-        return transferPhotoListToDtoList(photoElementList);
+        List<PhotoElement> list = photoElementRepository.findAllPhotosByArtProjectId(projectId);
+        return transferPhotoListToDtoList(list);
     }
 
     public List<PhotoElementDto> transferPhotoListToDtoList(List<PhotoElement> photoElements){

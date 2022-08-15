@@ -14,8 +14,8 @@ public class ArtProjectDto {
     private String description;
     private String subject;
     private Boolean isFinished = false;
-    private Long studentId;
-    private StudentDto studentDto;
+    private Long userId;
+    private UserDto userDto;
 
 
     public Long getId() {
@@ -62,10 +62,10 @@ public class ArtProjectDto {
         return isFinished;
     }
 
-    public Long getStudentId() { return studentId; }
+    public Long getUserId() { return userId; }
 
-    public StudentDto getStudentDto() {
-        return studentDto;
+    public UserDto getUserDto() {
+        return userDto;
     }
 
 
@@ -113,10 +113,10 @@ public class ArtProjectDto {
         isFinished = finished;
     }
 
-    public void setStudentId(Long studentId) { this.studentId = studentId; }
+    public void setUserId(Long userId) { this.userId = userId; }
 
-    public void setStudentDto(StudentDto studentDto) {
-        this.studentDto = studentDto;
+    public void setUserDto(UserDto userDto) {
+        this.userDto = userDto;
     }
 
 }
