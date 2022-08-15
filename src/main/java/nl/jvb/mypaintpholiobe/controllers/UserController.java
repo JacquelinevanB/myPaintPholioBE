@@ -3,7 +3,6 @@ package nl.jvb.mypaintpholiobe.controllers;
 import nl.jvb.mypaintpholiobe.domain.dtos.CreateUserDto;
 import nl.jvb.mypaintpholiobe.domain.dtos.UserDto;
 import nl.jvb.mypaintpholiobe.domain.entities.FileUploadResponse;
-import nl.jvb.mypaintpholiobe.domain.entities.Student;
 import nl.jvb.mypaintpholiobe.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

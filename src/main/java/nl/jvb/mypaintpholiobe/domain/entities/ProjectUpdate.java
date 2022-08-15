@@ -1,20 +1,19 @@
 package nl.jvb.mypaintpholiobe.domain.entities;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
-@Table(name = "photos")
-public class PhotoElement {
+@Table(name = "update")
+public class ProjectUpdate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private Long projectId;
+    private String reflectionText;
+    private Date date;
     private int sequenceNumber;
 
-    @OneToOne
-    CommentElement commentElement;
 
     @OneToOne
     FileUploadResponse file;
@@ -28,16 +27,16 @@ public class PhotoElement {
         return id;
     }
 
-    public Long getProjectId() {
-        return projectId;
+    public String getReflectionText() {
+        return reflectionText;
+    }
+
+    public Date getDate() {
+        return date;
     }
 
     public int getSequenceNumber() {
         return sequenceNumber;
-    }
-
-    public CommentElement getCommentElement() {
-        return commentElement;
     }
 
     public FileUploadResponse getFile() {
@@ -48,20 +47,21 @@ public class PhotoElement {
         return artProject;
     }
 
+
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setProjectId(Long projectId) {
-        this.projectId = projectId;
+    public void setReflectionText(String reflectionText) {
+        this.reflectionText = reflectionText;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public void setSequenceNumber(int sequenceNumber) {
         this.sequenceNumber = sequenceNumber;
-    }
-
-    public void setCommentElement(CommentElement commentElement) {
-        this.commentElement = commentElement;
     }
 
     public void setFile(FileUploadResponse file) {

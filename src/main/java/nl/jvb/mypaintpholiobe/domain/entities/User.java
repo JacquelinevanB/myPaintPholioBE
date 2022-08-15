@@ -1,9 +1,9 @@
 package nl.jvb.mypaintpholiobe.domain.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -27,15 +27,9 @@ public class User {
     @OneToOne
     FileUploadResponse file;
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
-    @JsonIgnore
-    List<ArtProject> artProjects;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<ArtProject> artProjects = new HashSet<>();
 
-    public List<ArtProject> getArtProjects() { return artProjects; }
-
-    public void setArtProjects(List<ArtProject> artProjects) {
-        this.artProjects = artProjects;
-    }
 
     public Long getId() {
         return id;
@@ -65,6 +59,10 @@ public class User {
         return file;
     }
 
+    public Set<ArtProject> getArtProjects() {
+        return artProjects;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -91,5 +89,9 @@ public class User {
 
     public void setFile(FileUploadResponse file) {
         this.file = file;
+    }
+
+    public void setArtProjects(Set<ArtProject> artProjects) {
+        this.artProjects = artProjects;
     }
 }

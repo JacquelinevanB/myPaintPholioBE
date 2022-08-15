@@ -41,18 +41,20 @@ public class ArtProjectService {
         return projectDtoList;
     }
 
-//    public List<ArtProjectDto> getAllProjectsByStudentId(Long studentId) {
-//        List<ArtProject> projectList = artProjectRepository.findArtProjectsByStudentId(Long studentId);
-//        List<ArtProjectDto> projectDtoList = new ArrayList<>();
-//        for(ArtProject artProject : projectList) {
-//            ArtProjectDto dto = artProjectToDto(artProject);
-//            if(artProject.getStudent() != null) {
-//                dto.setStudentDto(studentService.studentToDto(artProject.getStudent()));
-//            }
-//            projectDtoList.add(dto);
-//        }
-//        return projectDtoList;
-//    }
+    public List<ArtProjectDto> getAllProjectsByUserId(Long userId) {
+        if (artProjectRepository.findById(userId).isPresent()) {
+            List<ArtProject> projectList = artProjectRepository.findAllArtProjectsByUserId(userId);
+            List<ArtProjectDto> projectDtoList = new ArrayList<>();
+            for(ArtProject artProject : projectList) {
+                ArtProjectDto dto = artProjectToDto(artProject);
+                dto.setUserDto(userService.userToDto(artProject.getUser()));
+                projectDtoList.add(dto);
+            }
+            return projectDtoList;
+        } else {
+            throw new RecordNotFoundException("Gebruiker en/of projecten zijn niet gevonden.");
+        }
+    }
 
     public ArtProjectDto getArtProjectById(Long id) {
         if (artProjectRepository.findById(id).isPresent()) {
@@ -67,15 +69,18 @@ public class ArtProjectService {
         }
     }
 
-    public ArtProjectDto createArtProject(ArtProjectDto projectDto) {
-        ArtProject project = dtoToArtProject(projectDto);
-//        de studentId zou uit de JWT gehaald kunnen worden (ingelogde gebruiker)
-        var user = userRepository.findById(project.getUserId());
-        project.setUser(user.get());
-        artProjectRepository.save(project);
-        ArtProjectDto dto = artProjectToDto(project);
-        dto.setUserDto(userService.userToDto(project.getUser()));
-        return dto;
+    //        de studentId zou uit de JWT van de ingelogde gebruiker gehaald kunnen worden
+    public ArtProjectDto createArtProject(ArtProjectDto projectDto, Long userId) {
+        if (userRepository.findById(userId).isPresent()) {
+            ArtProject project = dtoToArtProject(projectDto);
+            project.setUser(userRepository.findById(userId).get());
+            artProjectRepository.save(project);
+            ArtProjectDto dto = artProjectToDto(project);
+            dto.setUserDto(userService.userToDto(project.getUser()));
+            return dto;
+        } else {
+            throw new RecordNotFoundException("Gebruiker is niet gevonden.");
+        }
     }
 
     public ArtProjectDto updateArtProject(Long id, ArtProjectDto projectDto) {
@@ -111,7 +116,6 @@ public class ArtProjectService {
         project.setDescription(dto.getDescription());
         project.setSubject(dto.getSubject());
         project.setFinished(dto.getFinished());
-        project.setUserId(dto.getUserId());
 
         return project;
     }
@@ -130,7 +134,6 @@ public class ArtProjectService {
         dto.setDescription(project.getDescription());
         dto.setSubject(project.getSubject());
         dto.setFinished(project.getFinished());
-        dto.setUserId(project.getUserId());
 
         return dto;
     }
