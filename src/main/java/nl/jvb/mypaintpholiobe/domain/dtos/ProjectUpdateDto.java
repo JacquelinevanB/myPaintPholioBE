@@ -3,6 +3,7 @@ package nl.jvb.mypaintpholiobe.domain.dtos;
 import nl.jvb.mypaintpholiobe.domain.entities.ArtProject;
 import nl.jvb.mypaintpholiobe.domain.entities.FileUploadResponse;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 public class ProjectUpdateDto {

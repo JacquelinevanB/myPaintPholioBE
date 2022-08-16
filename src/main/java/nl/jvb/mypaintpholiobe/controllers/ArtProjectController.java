@@ -12,7 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.net.URI;
 import java.util.List;
 
+@CrossOrigin
 @RestController
+@RequestMapping("/projects")
 public class ArtProjectController {
 
     private final ArtProjectService artProjectService;
@@ -22,20 +24,20 @@ public class ArtProjectController {
         this.artProjectService = artProjectService;
     }
 
-    @GetMapping("/projects")
+    @GetMapping("/admin")
     public ResponseEntity<List<ArtProjectDto>> getAllProjects() {
         List<ArtProjectDto> allProjects = artProjectService.getAllProjects();
         return ResponseEntity.ok().body(allProjects);
     }
 
-    @GetMapping("/{user_id}/projects")
+    @GetMapping("/{username}")
     public ResponseEntity<List<ArtProjectDto>> getAllProjectsByUserId(@RequestParam(value = "username") String username) {
         List<ArtProjectDto> userProjects;
         userProjects = artProjectService.getAllProjectsByUserId(username);
         return ResponseEntity.ok().body(userProjects);
     }
 
-    @GetMapping("/projects/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ArtProjectDto> getArtProjectById(@PathVariable("id") Long id) {
         ArtProjectDto oneProject = artProjectService.getArtProjectById(id);
         return ResponseEntity.ok().body(oneProject);
@@ -50,14 +52,14 @@ public class ArtProjectController {
         return ResponseEntity.created(location).body(newProject);
     }
 
-    @PutMapping("/projects/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Object> updateArtProject(@PathVariable("id") Long id,
                                                    @RequestBody ArtProjectDto artProjectDto) {
         ArtProjectDto projectDto = artProjectService.updateArtProject(id, artProjectDto);
         return ResponseEntity.ok().body(projectDto);
     }
 
-    @DeleteMapping("/projects/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<ArtProject> deleteArtProject(@PathVariable("id") Long id) {
         artProjectService.deleteArtProjectById(id);
         return ResponseEntity.noContent().build();

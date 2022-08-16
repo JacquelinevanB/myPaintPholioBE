@@ -1,11 +1,14 @@
 package nl.jvb.mypaintpholiobe.domain.dtos;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 public class ArtProjectDto {
     private Long id;
+    @NotEmpty
     private String title;
     private String mediumType;
+    @NotEmpty
     private Date dateStart;
     private Date dateEnd;
     private String inspiration;
@@ -14,7 +17,6 @@ public class ArtProjectDto {
     private String description;
     private String subject;
     private Boolean isFinished = false;
-    private Long userId;
     private UserDto userDto;
 
 

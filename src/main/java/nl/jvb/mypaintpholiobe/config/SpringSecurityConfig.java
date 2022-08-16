@@ -49,12 +49,30 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/users").permitAll()
-                .antMatchers(HttpMethod.GET,"/users").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST,"/users/**").hasRole("ADMIN")
+
+                .antMatchers(HttpMethod.GET,"/users/admin").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET,"/users/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers(HttpMethod.POST, "/users/register").permitAll()
+                .antMatchers(HttpMethod.POST, "/users/authorities").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/users/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers(HttpMethod.PUT, "/users/**").hasAnyRole("ADMIN", "USER")
                 .antMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
+
+                .antMatchers(HttpMethod.GET,"/projects/admin").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET,"/projects/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers(HttpMethod.POST, "/projects/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers(HttpMethod.PUT, "/projects/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers(HttpMethod.DELETE, "/projects/**").hasAnyRole("ADMIN", "USER")
+
+                .antMatchers(HttpMethod.GET,"/updates/admin").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET,"/updates/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers(HttpMethod.POST, "/updates/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers(HttpMethod.PUT, "/updates/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers(HttpMethod.DELETE, "/updates/**").hasAnyRole("ADMIN", "USER")
+
                 .antMatchers("/authenticated").authenticated()
                 .antMatchers("/authenticate").permitAll()
+
                 .anyRequest().permitAll()
                 .and()
                 .sessionManagement()
@@ -62,5 +80,3 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }
-//[] 12. Kijk goed of je in de `SpringSecurityConfig` nog antmatchers wil/moet toevoegen.
-//[] 13. Update de data.sql met users en authorities.

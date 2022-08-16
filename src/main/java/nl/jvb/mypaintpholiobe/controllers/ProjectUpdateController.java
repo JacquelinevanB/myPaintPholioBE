@@ -10,10 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.net.URI;
 import java.util.List;
 
+@CrossOrigin
 @RestController
+@RequestMapping("/updates")
 public class ProjectUpdateController {
 
     private final ProjectUpdateService projectUpdateService;
@@ -26,25 +29,28 @@ public class ProjectUpdateController {
         this.fileUploadController = fileUploadController;
     }
 
-    @GetMapping("/updates")
+    @Transactional
+    @GetMapping
     public ResponseEntity<List<ProjectUpdateDto>> getAllProjectUpdates() {
         List<ProjectUpdateDto> allProjectUpdates = projectUpdateService.getAllUpdates();
         return ResponseEntity.ok().body(allProjectUpdates);
     }
-// NOG GOED NADENKEN OVER HET PAD VAN DEZE QUERY!!! <------------------------------
-    @GetMapping("/{project_id}/projects")
+
+    @Transactional
+    @GetMapping("/{project_id}")
     public ResponseEntity<List<ProjectUpdateDto>> getAllUpdatesByProjectId(@RequestParam(value = "projectId") Long Id) {
         List<ProjectUpdateDto> projectUpdates;
         projectUpdates = projectUpdateService.getAllUpdatesByProjectId(Id);
         return ResponseEntity.ok().body(projectUpdates);
     }
 
-    @GetMapping("/updates/{id}")
+    @Transactional
+    @GetMapping("/{id}")
     public ResponseEntity<ProjectUpdateDto> getProjectUpdateById(@PathVariable("id") Long id) {
         ProjectUpdateDto oneUpdate = projectUpdateService.getUpdateById(id);
         return ResponseEntity.ok().body(oneUpdate);
     }
-    // NOG GOED NADENKEN OVER HET PAD VAN DEZE QUERY!!! <------------------------------
+
     @PostMapping("/add_update/{project_id}")
     public ResponseEntity<ProjectUpdateDto> createUpdate(@RequestBody ProjectUpdateDto updateDto,
                                                          @PathVariable ("project_id") Long projectId) {
@@ -53,20 +59,20 @@ public class ProjectUpdateController {
         return ResponseEntity.created(location).body(newUpdate);
     }
 
-    @PutMapping("/updates/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Object> updateProjectUpdate(@PathVariable("id") Long id,
                                               @RequestBody ProjectUpdateDto projectUpdateDto) {
         ProjectUpdateDto update = projectUpdateService.updateProjectUpdate(id, projectUpdateDto);
         return ResponseEntity.ok().body(update);
     }
 
-    @DeleteMapping("/updates/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<ProjectUpdate> deleteProjectUpdate(@PathVariable("id") Long id) {
         projectUpdateService.deleteUpdateById(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/updates/{id}/photo")
+    @PostMapping("/{id}/image")
     public void assignPhotoToProjectUpdate(@PathVariable("id") Long updateId,
                                   @RequestBody MultipartFile file) {
         FileUploadResponse photo = fileUploadController.singleFileUpload(file);

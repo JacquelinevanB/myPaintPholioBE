@@ -31,7 +31,7 @@ public class UserController {
         this.fileUploadController = fileUploadController;
     }
 
-    @GetMapping
+    @GetMapping("/admin")
     @Transactional
     public ResponseEntity<List<UserDto>> getAllUsers() {
         List<UserDto> allUsers = userService.getAllUsers();
@@ -45,7 +45,7 @@ public class UserController {
         return ResponseEntity.ok().body(oneUser);
     }
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<UserDto> createUser(@RequestBody CreateUserDto createUserDto) {
         String newUserName = userService.createUser(createUserDto);
 
@@ -67,13 +67,13 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{username}")
     public ResponseEntity<Object> deleteUser(@PathVariable("username") String username) {
         userService.deleteUserById(username);
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping(value = "/{username}/authorities")
+    @PostMapping("/{username}/authorities")
     public ResponseEntity<Object> addUserAuthority(
             @PathVariable("username") String username,
             @RequestBody Map<String, Object> fields) {
@@ -95,9 +95,10 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/{id}/photo")
-    public void assignPhotoToUser(@PathVariable("username") String username,
-                                     @RequestBody MultipartFile file) {
+    @PostMapping("/{username}/image")
+    public void assignPhotoToUser(
+            @PathVariable("username") String username,
+            @RequestBody MultipartFile file) {
         FileUploadResponse photo = fileUploadController.singleFileUpload(file);
         userService.assignPhotoToUser(photo.getFileName(), username);
     }
