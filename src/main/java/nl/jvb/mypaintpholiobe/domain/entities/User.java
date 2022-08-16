@@ -2,7 +2,6 @@ package nl.jvb.mypaintpholiobe.domain.entities;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -10,19 +9,34 @@ import java.util.Set;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-//    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String username;
-//    @Column(nullable = false, length = 50)
+
+    @Column(nullable = false)
     private String password;
-//    @Column(nullable = false, length = 50)
+
+    @Column(nullable = false)
+    private Boolean enabled = true;
+
+    @Column
+    private String apiKey;
+
+    @Column(nullable = false)
     private String firstName;
-//    @Column(nullable = false, length = 50)
+
+    @Column(nullable = false)
     private String lastName;
-//    @Column(nullable = false)
+
+    @Column(nullable = false)
     private String emailAddress;
 
+    @OneToMany(
+            targetEntity = Authority.class,
+            mappedBy = "username",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.EAGER)
+    private Set<Authority> authorities = new HashSet<>();
 
     @OneToOne
     FileUploadResponse file;
@@ -31,16 +45,20 @@ public class User {
     private Set<ArtProject> artProjects = new HashSet<>();
 
 
-    public Long getId() {
-        return id;
-    }
-
     public String getUsername() {
         return username;
     }
 
     public String getPassword() {
         return password;
+    }
+
+    public Boolean isEnabled() {
+        return enabled;
+    }
+
+    public String getApiKey() {
+        return apiKey;
     }
 
     public String getFirstName() {
@@ -55,6 +73,10 @@ public class User {
         return emailAddress;
     }
 
+    public Set<Authority> getAuthorities() {
+        return authorities;
+    }
+
     public FileUploadResponse getFile() {
         return file;
     }
@@ -63,16 +85,20 @@ public class User {
         return artProjects;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public void setUsername(String username) {
         this.username = username;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
     }
 
     public void setFirstName(String firstName) {
@@ -87,11 +113,14 @@ public class User {
         this.emailAddress = emailAddress;
     }
 
+    public void addAuthority(Authority authority) { this.authorities.add(authority); }
+    public void removeAuthority(Authority authority) { this.authorities.remove(authority); }
+
     public void setFile(FileUploadResponse file) {
         this.file = file;
     }
 
-    public void setArtProjects(Set<ArtProject> artProjects) {
-        this.artProjects = artProjects;
-    }
+    public void setArtProjects(Set<ArtProject> artProjects) { this.artProjects = artProjects; }
+    public void addArtProjects(ArtProject artProject) { this.artProjects.add(artProject); }
+    public void removeArtProjects(ArtProject artProject) { this.artProjects.remove(artProject); }
 }

@@ -41,13 +41,13 @@ public class ArtProjectService {
         return projectDtoList;
     }
 
-    public List<ArtProjectDto> getAllProjectsByUserId(Long userId) {
-        if (artProjectRepository.findById(userId).isPresent()) {
-            List<ArtProject> projectList = artProjectRepository.findAllArtProjectsByUserId(userId);
+    public List<ArtProjectDto> getAllProjectsByUserId(String username) {
+        if (userRepository.findById(username).isPresent()) {
+            List<ArtProject> projectList = artProjectRepository.findArtProjectsByUserIsContaining(username);
             List<ArtProjectDto> projectDtoList = new ArrayList<>();
             for(ArtProject artProject : projectList) {
                 ArtProjectDto dto = artProjectToDto(artProject);
-                dto.setUserDto(userService.userToDto(artProject.getUser()));
+                dto.setUserDto(userService.userToDto(artProject.getUser())); // ---> klopt dit?
                 projectDtoList.add(dto);
             }
             return projectDtoList;
@@ -70,10 +70,10 @@ public class ArtProjectService {
     }
 
     //        de studentId zou uit de JWT van de ingelogde gebruiker gehaald kunnen worden
-    public ArtProjectDto createArtProject(ArtProjectDto projectDto, Long userId) {
-        if (userRepository.findById(userId).isPresent()) {
+    public ArtProjectDto createArtProject(ArtProjectDto projectDto, String username) {
+        if (userRepository.findById(username).isPresent()) {
             ArtProject project = dtoToArtProject(projectDto);
-            project.setUser(userRepository.findById(userId).get());
+            project.setUser(userRepository.findById(username).get());
             artProjectRepository.save(project);
             ArtProjectDto dto = artProjectToDto(project);
             dto.setUserDto(userService.userToDto(project.getUser()));
@@ -95,7 +95,7 @@ public class ArtProjectService {
         }
     }
 
-    public void deleteArtProjectById(@RequestBody Long id) {
+    public void deleteArtProjectById(Long id) {
         if (artProjectRepository.findById(id).isPresent()) {
             artProjectRepository.deleteById(id);
         } else {

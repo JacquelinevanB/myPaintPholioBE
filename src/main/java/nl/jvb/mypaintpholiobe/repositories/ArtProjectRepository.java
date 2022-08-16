@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ArtProjectRepository extends JpaRepository<ArtProject, Long> {
 
-    List<ArtProject> findAllArtProjectsByUserId(Long userId);
+    List<ArtProject> findArtProjectsByUserIsContaining(String username);
 }

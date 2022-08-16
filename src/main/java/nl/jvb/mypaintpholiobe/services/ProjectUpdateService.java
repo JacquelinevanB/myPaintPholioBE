@@ -102,7 +102,7 @@ public class ProjectUpdateService {
         }
     }
 
-    public void deleteUpdateById(@RequestBody Long id) {
+    public void deleteUpdateById(Long id) {
         if (projectUpdateRepository.findById(id).isPresent()) {
             projectUpdateRepository.deleteById(id);
         } else {

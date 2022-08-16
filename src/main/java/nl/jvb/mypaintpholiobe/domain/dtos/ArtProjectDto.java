@@ -62,8 +62,6 @@ public class ArtProjectDto {
         return isFinished;
     }
 
-    public Long getUserId() { return userId; }
-
     public UserDto getUserDto() {
         return userDto;
     }
@@ -112,8 +110,6 @@ public class ArtProjectDto {
     public void setFinished(Boolean finished) {
         isFinished = finished;
     }
-
-    public void setUserId(Long userId) { this.userId = userId; }
 
     public void setUserDto(UserDto userDto) {
         this.userDto = userDto;

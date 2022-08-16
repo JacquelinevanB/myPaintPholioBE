@@ -1,20 +1,51 @@
 package nl.jvb.mypaintpholiobe.domain.dtos;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import nl.jvb.mypaintpholiobe.domain.entities.Authority;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import java.util.Set;
+
 public class UserDto {
-    private Long id;
-    private String username;
-    private String firstName;
-    private String lastName;
-    private String emailAddress;
+    @NotEmpty
+    public String username;
 
+    @NotEmpty
+    public String password;
 
+    @NotEmpty
+    public Boolean enabled;
 
-    public Long getId() {
-        return id;
-    }
+    public String apiKey;
+
+    @NotEmpty
+    public String firstName;
+
+    @NotEmpty
+    public String lastName;
+
+    @NotEmpty
+    @Email
+    public String emailAddress;
+    @JsonSerialize
+    public Set<Authority> authorities;
+
 
     public String getUsername() {
         return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public String getApiKey() {
+        return apiKey;
     }
 
     public String getFirstName() {
@@ -29,13 +60,24 @@ public class UserDto {
         return emailAddress;
     }
 
-
-    public void setId(Long id) {
-        this.id = id;
+    public Set<Authority> getAuthorities() {
+        return authorities;
     }
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
     }
 
     public void setFirstName(String firstName) {
@@ -50,4 +92,7 @@ public class UserDto {
         this.emailAddress = emailAddress;
     }
 
+    public void setAuthorities(Set<Authority> authorities) {
+        this.authorities = authorities;
+    }
 }

@@ -29,9 +29,9 @@ public class ArtProjectController {
     }
 
     @GetMapping("/{user_id}/projects")
-    public ResponseEntity<List<ArtProjectDto>> getAllProjectsByUserId(@RequestParam(value = "userId") Long userId) {
+    public ResponseEntity<List<ArtProjectDto>> getAllProjectsByUserId(@RequestParam(value = "username") String username) {
         List<ArtProjectDto> userProjects;
-        userProjects = artProjectService.getAllProjectsByUserId(userId);
+        userProjects = artProjectService.getAllProjectsByUserId(username);
         return ResponseEntity.ok().body(userProjects);
     }
 
@@ -41,10 +41,10 @@ public class ArtProjectController {
         return ResponseEntity.ok().body(oneProject);
     }
 
-    @PostMapping("/add_project/{user_id}")
+    @PostMapping("/add_project/{username}")
     public ResponseEntity<ArtProjectDto> createArtProject(@RequestBody ArtProjectDto artProjectDto,
-                                                          @PathVariable Long userId) {
-        final ArtProjectDto newProject = artProjectService.createArtProject(artProjectDto, userId);
+                                                          @PathVariable String username) {
+        final ArtProjectDto newProject = artProjectService.createArtProject(artProjectDto, username);
         final URI location = URI.create("/projects/" + newProject.getId());
 //        final URI location = URI.create("/users/" + newProject.getUserId() + "/" + newProject.getId());
         return ResponseEntity.created(location).body(newProject);

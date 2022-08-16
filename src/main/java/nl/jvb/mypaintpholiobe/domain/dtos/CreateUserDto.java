@@ -1,17 +1,38 @@
 package nl.jvb.mypaintpholiobe.domain.dtos;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import nl.jvb.mypaintpholiobe.domain.entities.Authority;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+import java.util.Set;
+
 public class CreateUserDto {
-//    @NotEmpty
-//    @Size(min = 3, max = 50)
-    private String username;
-//    @NotEmpty
-//    @Size(min = 8, max = 50)
-    private String password;
-    private String firstName;
-    private String lastName;
-//    @NotEmpty
-//    @Email
-    private String emailAddress;
+
+    @NotEmpty
+    public String username;
+
+    @NotEmpty
+    @Size(min = 8)
+    public String password;
+
+    @NotEmpty
+    public Boolean enabled;
+
+    public String apiKey;
+
+    @NotEmpty
+    public String firstName;
+
+    @NotEmpty
+    public String lastName;
+
+    @NotEmpty
+    @Email
+    public String emailAddress;
+    @JsonSerialize
+    public Set<Authority> authorities;
 
 
     public String getUsername() {
@@ -20,6 +41,14 @@ public class CreateUserDto {
 
     public String getPassword() {
         return password;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public String getApiKey() {
+        return apiKey;
     }
 
     public String getFirstName() {
@@ -34,6 +63,9 @@ public class CreateUserDto {
         return emailAddress;
     }
 
+    public Set<Authority> getAuthorities() {
+        return authorities;
+    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -41,6 +73,14 @@ public class CreateUserDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
     }
 
     public void setFirstName(String firstName) {
@@ -55,4 +95,7 @@ public class CreateUserDto {
         this.emailAddress = emailAddress;
     }
 
+    public void setAuthorities(Set<Authority> authorities) {
+        this.authorities = authorities;
+    }
 }

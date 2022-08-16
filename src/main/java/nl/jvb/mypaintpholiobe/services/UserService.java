@@ -2,18 +2,21 @@ package nl.jvb.mypaintpholiobe.services;
 
 import nl.jvb.mypaintpholiobe.domain.dtos.CreateUserDto;
 import nl.jvb.mypaintpholiobe.domain.dtos.UserDto;
+import nl.jvb.mypaintpholiobe.domain.entities.Authority;
 import nl.jvb.mypaintpholiobe.domain.entities.FileUploadResponse;
 import nl.jvb.mypaintpholiobe.domain.entities.User;
 import nl.jvb.mypaintpholiobe.exceptions.RecordNotFoundException;
 import nl.jvb.mypaintpholiobe.repositories.FileUploadRepository;
 import nl.jvb.mypaintpholiobe.repositories.UserRepository;
+import nl.jvb.mypaintpholiobe.utils.RandomStringGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -32,46 +35,69 @@ public class UserService {
         List<User> userList = userRepository.findAll();
         List<UserDto> userDtoList = new ArrayList<>();
         for(User user : userList) {
-            UserDto dto = userToDto(user);
-//            if(user.getProfilePhoto() != null)
-            userDtoList.add(dto);
+            userDtoList.add(userToDto(user));
         }
         return userDtoList;
     }
 
-    public UserDto getUserById(Long id) {
-        if (userRepository.findById(id).isPresent()) {
-            User user = userRepository.findById(id).get();
-            UserDto dto = userToDto(user);
-            return dto;
+    public UserDto getUserById(String username) {
+        if (userRepository.findById(username).isPresent()) {
+            User user = userRepository.findById(username).get();
+            return userToDto(user);
         } else {
-            throw new RecordNotFoundException("Geen gebruiker gevonden.");
+            throw new RecordNotFoundException("Geen gebruiker '" + username + "' gevonden.");
         }
     }
 
-    public UserDto createUser(CreateUserDto createUserDto) {
+    public boolean userExists(String username) {
+        return userRepository.existsById(username);
+    }
+
+    public String createUser(CreateUserDto createUserDto) {
+        String randomString = RandomStringGenerator.generateAlphaNumeric(20);
+        createUserDto.setApiKey(randomString);
         User user = userRepository.save(createNewUser(createUserDto));
-        return userToDto(user);
+        return user.getUsername();
     }
 
-    public UserDto updateUser(Long id, CreateUserDto createUserDto) {
-        if (userRepository.findById(id).isPresent()) {
-            User oldInfo = userRepository.findById(id).get();
-            User newInfo = createNewUser(createUserDto);
-            newInfo.setId(oldInfo.getId());
-            userRepository.save(newInfo);
-            return userToDto(newInfo);
+    public void updateUser(String username, CreateUserDto createUserDto) {
+        if (userRepository.findById(username).isPresent()) {
+            User updatedUser = createNewUser(createUserDto);
+            userRepository.save(updatedUser);
         } else {
             throw new RecordNotFoundException("Geen gebruiker gevonden.");
         }
     }
 
-    public void deleteUserById(@RequestBody Long id) {
-        if (userRepository.findById(id).isPresent()) {
-            userRepository.deleteById(id);
+    public void deleteUserById(String username) {
+        if (userRepository.findById(username).isPresent()) {
+            userRepository.deleteById(username);
         } else {
             throw new RecordNotFoundException("Geen gebruiker gevonden.");
         }
+    }
+
+    public Set<Authority> getAuthorities(String username) {
+        if (!userRepository.existsById(username)) throw new UsernameNotFoundException(username);
+        User user = userRepository.findById(username).get();
+        UserDto userDto = userToDto(user);
+        return userDto.getAuthorities();
+    }
+
+    public void addAuthority(String username, String authority) {
+        if (!userRepository.existsById(username)) throw new UsernameNotFoundException(username);
+        User user = userRepository.findById(username).get();
+        user.addAuthority(new Authority(username, authority));
+        userRepository.save(user);
+    }
+
+    public void removeAuthority(String username, String authority) {
+        if (!userRepository.existsById(username)) throw new UsernameNotFoundException(username);
+        User user = userRepository.findById(username).get();
+        Authority authorityToRemove = user.getAuthorities().stream()
+                .filter((a) -> a.getAuthority().equalsIgnoreCase(authority)).findAny().get();
+        user.removeAuthority(authorityToRemove);
+        userRepository.save(user);
     }
 
     public User createNewUser(CreateUserDto dto) {
@@ -79,9 +105,11 @@ public class UserService {
 
         user.setUsername(dto.getUsername());
         user.setPassword(dto.getPassword());
-        user.setEmailAddress(dto.getEmailAddress());
+        user.setEnabled(dto.getEnabled());
+        user.setApiKey(dto.getApiKey());
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
+        user.setEmailAddress(dto.getEmailAddress());
 
         return user;
     }
@@ -89,18 +117,21 @@ public class UserService {
     public UserDto userToDto(User user) {
         UserDto dto = new UserDto();
 
-        dto.setId(user.getId());
         dto.setUsername(user.getUsername());
-        dto.setEmailAddress(user.getEmailAddress());
+        dto.setPassword(user.getPassword());
+        dto.setEnabled(user.isEnabled());
+        dto.setApiKey(user.getApiKey());
+        dto.setAuthorities(user.getAuthorities());
         dto.setFirstName(user.getFirstName());
         dto.setLastName(user.getLastName());
+        dto.setEmailAddress(user.getEmailAddress());
 
         return dto;
     }
 
-    public void assignPhotoToUser(String name, Long userId) {
-        Optional<User> optionalUser = userRepository.findById(userId);
-        Optional<FileUploadResponse> optionalPhoto = fileUploadRepository.findByFileName(name);
+    public void assignPhotoToUser(String imagename, String username) {
+        Optional<User> optionalUser = userRepository.findById(username);
+        Optional<FileUploadResponse> optionalPhoto = fileUploadRepository.findByFileName(imagename);
         if (optionalUser.isPresent() && optionalPhoto.isPresent()) {
             FileUploadResponse photo = optionalPhoto.get();
             User user = optionalUser.get();
