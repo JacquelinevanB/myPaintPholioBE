@@ -9,7 +9,6 @@ import nl.jvb.mypaintpholiobe.repositories.FileUploadRepository;
 import nl.jvb.mypaintpholiobe.repositories.ProjectUpdateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
