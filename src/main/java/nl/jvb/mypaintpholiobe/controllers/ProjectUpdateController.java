@@ -1,6 +1,5 @@
 package nl.jvb.mypaintpholiobe.controllers;
 
-import nl.jvb.mypaintpholiobe.domain.dtos.ArtProjectDto;
 import nl.jvb.mypaintpholiobe.domain.dtos.ProjectUpdateDto;
 import nl.jvb.mypaintpholiobe.domain.entities.FileUploadResponse;
 import nl.jvb.mypaintpholiobe.domain.entities.ProjectUpdate;
