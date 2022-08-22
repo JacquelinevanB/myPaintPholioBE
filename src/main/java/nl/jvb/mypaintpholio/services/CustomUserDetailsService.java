@@ -1,6 +1,6 @@
 package nl.jvb.mypaintpholio.services;
 
-import nl.jvb.mypaintpholio.domain.dtos.UserDto;
+import nl.jvb.mypaintpholio.domain.dtos.PersonDto;
 import nl.jvb.mypaintpholio.domain.entities.Authority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,13 +17,13 @@ import java.util.Set;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserService userService;
+    private PersonService personService;
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        UserDto userDto = userService.getUserById(username);
-        String password = userDto.getPassword();
-        Set<Authority> authorities = userDto.getAuthorities();
+        PersonDto personDto = personService.getUserById(username);
+        String password = personDto.getPassword();
+        Set<Authority> authorities = personDto.getAuthorities();
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         for (Authority authority: authorities) {
             grantedAuthorities.add(new SimpleGrantedAuthority(authority.getAuthority()));
