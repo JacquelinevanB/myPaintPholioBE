@@ -1,15 +1,12 @@
 package nl.jvb.mypaintpholio.domain.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Entity
-@Table(name = "users")
-public class User {
+@MappedSuperclass
+public abstract class User {
 
     @Id
 //    @Column(nullable = false, unique = true)
@@ -32,10 +29,6 @@ public class User {
 
 //    @Column(nullable = false)
     private String emailAddress;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonIgnore
-    List<ArtProject> artProjects;
 
     @OneToMany(
             targetEntity = Authority.class,
@@ -77,9 +70,7 @@ public class User {
         return emailAddress;
     }
 
-    public List<ArtProject> getArtProjects() {
-        return artProjects;
-    }
+
 
     public Set<Authority> getAuthorities() {
         return authorities;
@@ -123,9 +114,5 @@ public class User {
 
     public void setFile(FileUploadResponse file) {
         this.file = file;
-    }
-
-    public void setArtProjects(List<ArtProject> artProjects) {
-        this.artProjects = artProjects;
     }
 }
