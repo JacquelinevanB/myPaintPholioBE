@@ -1,11 +1,11 @@
 package nl.jvb.mypaintpholio.domain.dtos;
 
+import javax.validation.constraints.NotEmpty;
+
 public class ProjectDto {
     private Long id;
-//    @NotEmpty
     private String title;
     private String mediumType;
-//    @NotEmpty
     private String dateStart;
     private String dateEnd;
     private String inspiration;
@@ -15,7 +15,6 @@ public class ProjectDto {
     private String subject;
     private Boolean isFinished = false;
     private PersonDto personDto;
-
 
     public Long getId() {
         return id;
@@ -61,10 +60,9 @@ public class ProjectDto {
         return isFinished;
     }
 
-    public PersonDto getUserDto() {
-        return personDto;
+    public @NotEmpty String getPersonDto() {
+        return personDto.username;
     }
-
 
     public void setId(Long id) {
         this.id = id;
@@ -110,8 +108,11 @@ public class ProjectDto {
         this.isFinished = isFinished;
     }
 
-    public void setUserDto(PersonDto personDto) {
-        this.personDto = personDto;
+    public void setFinished(Boolean finished) {
+        isFinished = finished;
     }
 
+    public void setPersonDto(PersonDto personDto) {
+        this.personDto = personDto;
+    }
 }

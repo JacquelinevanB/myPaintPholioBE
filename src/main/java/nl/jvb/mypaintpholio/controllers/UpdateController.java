@@ -54,8 +54,7 @@ public class UpdateController {
     public ResponseEntity<UpdateDto> createUpdate(@RequestBody UpdateDto updateDto,
                                                   @PathVariable ("project_id") Long projectId) {
         final UpdateDto newUpdate = updateService.createUpdate(updateDto, projectId);
-        final URI location = URI.create("/updates/" + newUpdate.getId());
-        return ResponseEntity.created(location).body(newUpdate);
+        return ResponseEntity.ok().body(newUpdate);
     }
 
     @PutMapping("/{id}")
