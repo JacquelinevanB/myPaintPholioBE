@@ -3,11 +3,11 @@ package nl.jvb.mypaintpholio.domain.dtos;
 import nl.jvb.mypaintpholio.domain.entities.FileUploadResponse;
 
 
-public class UpdateDto {
+public class ReflectionDto {
 
     private Long id;
     private String reflectionText;
-    private String date;
+    private String dateMade;
     private int sequenceNumber;
     private FileUploadResponse fileUploadResponse;
     private ProjectDto projectDto;
@@ -20,8 +20,8 @@ public class UpdateDto {
         return reflectionText;
     }
 
-    public String getDate() {
-        return date;
+    public String getDateMade() {
+        return dateMade;
     }
 
     public int getSequenceNumber() {
@@ -44,8 +44,8 @@ public class UpdateDto {
         this.reflectionText = reflectionText;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDateMade(String dateMade) {
+        this.dateMade = dateMade;
     }
 
     public void setSequenceNumber(int sequenceNumber) {

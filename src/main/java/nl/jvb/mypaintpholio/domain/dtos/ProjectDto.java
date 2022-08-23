@@ -60,8 +60,8 @@ public class ProjectDto {
         return isFinished;
     }
 
-    public @NotEmpty String getPersonDto() {
-        return personDto.username;
+    public PersonDto getPersonDto() {
+        return personDto;
     }
 
     public void setId(Long id) {
