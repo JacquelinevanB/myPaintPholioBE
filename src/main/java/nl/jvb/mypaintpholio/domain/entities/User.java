@@ -70,8 +70,6 @@ public abstract class User {
         return emailAddress;
     }
 
-
-
     public Set<Authority> getAuthorities() {
         return authorities;
     }

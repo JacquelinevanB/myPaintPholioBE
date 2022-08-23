@@ -41,18 +41,20 @@ public class ProjectService {
     }
 
     public List<ProjectDto> getAllProjectsByPerson(String username) {
-        if (personRepository.findById(username).isPresent()) {
-            List<Project> projectList = projectRepository.findAllByPerson(username);
-            List<ProjectDto> projectDtoList = new ArrayList<>();
-            for(Project project : projectList) {
-                ProjectDto dto = projectToDto(project);
-                dto.setUserDto(personService.personToDto(project.getPerson())); // ---> klopt dit?
-                projectDtoList.add(dto);
-            }
-            return projectDtoList;
-        } else {
-            throw new RecordNotFoundException("Gebruiker en/of projecten zijn niet gevonden.");
+        List<Project> projectList = projectRepository.findAllProjectsByPerson(username);
+        List<ProjectDto> projectDtoList = new ArrayList<>();
+        for(Project project : projectList) {
+            ProjectDto dto = projectToDto(project);
+            dto.setUserDto(personService.personToDto(project.getPerson())); // ---> klopt dit?
+            projectDtoList.add(dto);
         }
+        return projectDtoList;
+
+//        if (personRepository.findById(username).isPresent()) {
+//
+//        } else {
+//            throw new RecordNotFoundException("Gebruiker en/of projecten zijn niet gevonden.");
+//        }
     }
 
     public ProjectDto getProjectById(Long id) {

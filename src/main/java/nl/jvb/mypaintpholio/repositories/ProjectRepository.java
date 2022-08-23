@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
-    List<Project> findAllByPerson(String username);
+    List<Project> findAllProjectsByPerson(String username);
 }

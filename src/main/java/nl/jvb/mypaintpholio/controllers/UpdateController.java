@@ -29,14 +29,14 @@ public class UpdateController {
     }
 
     @Transactional
-    @GetMapping
+    @GetMapping("/admin")
     public ResponseEntity<List<UpdateDto>> getAllUpdates() {
         List<UpdateDto> allUpdates = updateService.getAllUpdates();
         return ResponseEntity.ok().body(allUpdates);
     }
 
     @Transactional
-    @GetMapping("/{project_id}")
+    @GetMapping("/project/{project_id}")
     public ResponseEntity<List<UpdateDto>> getAllUpdatesByProject(@PathVariable(value = "project_id") Long Id) {
         List<UpdateDto> updates;
         updates = updateService.getAllUpdatesByProjectId(Id);

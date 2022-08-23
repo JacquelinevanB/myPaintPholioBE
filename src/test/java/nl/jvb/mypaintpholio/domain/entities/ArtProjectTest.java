@@ -7,90 +7,90 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ArtProjectTest {
+class ProjectTest {
 
-    private ArtProject artProject;
+    private Project project;
 
     @BeforeEach
     void setUp() {
-        artProject = new ArtProject();
+        project = new Project();
     }
 
     @Test
-    @DisplayName("Return should be a Long Id of the ArtProject")
-    void getIdShouldReturnLongIdOfArtProject() {
-        artProject.setId(15L);
-        assertEquals(15L, artProject.getId());
+    @DisplayName("Return should be a Long Id of the Project")
+    void getIdShouldReturnLongIdOfProject() {
+        project.setId(15L);
+        assertEquals(15L, project.getId());
     }
 
     @Test
-    @DisplayName("Return should be a String MediumType of the ArtProject")
-    void getMediumTypeShouldReturnStringMediumTypeOfArtProject() {
-        artProject.setMediumType("testmedium");
-        assertEquals("testmedium", artProject.getMediumType());
+    @DisplayName("Return should be a String MediumType of the Project")
+    void getMediumTypeShouldReturnStringMediumTypeOfProject() {
+        project.setMediumType("testmedium");
+        assertEquals("testmedium", project.getMediumType());
     }
 
     @Test
-    @DisplayName("Return should be int Height of the ArtProject")
-    void getHeightShouldReturnIntHeightOfArtProject() {
-        artProject.setHeight(80);
-        assertEquals(80, artProject.getHeight());
+    @DisplayName("Return should be int Height of the Project")
+    void getHeightShouldReturnIntHeightOfProject() {
+        project.setHeight(80);
+        assertEquals(80, project.getHeight());
     }
 
     @Test
-    @DisplayName("Return should be a String Description of the ArtProject")
-    void getDescriptionShouldReturnStringDescriptionOfArtProject() {
-        artProject.setDescription("Testdescription");
-        assertEquals("Testdescription", artProject.getDescription());
+    @DisplayName("Return should be a String Description of the Project")
+    void getDescriptionShouldReturnStringDescriptionOfProject() {
+        project.setDescription("Testdescription");
+        assertEquals("Testdescription", project.getDescription());
     }
 
     @Test
     @DisplayName("Return should be true when Finished status is set to true")
     void getFinishedShouldReturnTrueWhenBooleanFinishedIsSetToTrue() {
-        artProject.setFinished(true);
-        assertTrue(artProject.isFinished());
+        project.setFinished(true);
+        assertTrue(project.isFinished());
     }
 
     @Test
     @DisplayName("Should set Finished status to false when false is given")
     void setFinishedShouldSetBooleanFinishedToFalseWhenFalseIsGiven() {
-        artProject.setFinished(false);
-        assertFalse(artProject.isFinished());
+        project.setFinished(false);
+        assertFalse(project.isFinished());
     }
 
     @Test
-    @DisplayName("Should set Title of ArtProject to the input String value")
-    void setTitleShouldSetTitleOfArtProjectToInputStringValue() {
-        artProject.setTitle("Test title");
-        assertEquals("Test title", artProject.getTitle());
+    @DisplayName("Should set Title of Project to the input String value")
+    void setTitleShouldSetTitleOfProjectToInputStringValue() {
+        project.setTitle("Test title");
+        assertEquals("Test title", project.getTitle());
     }
 
     @Test
-    @DisplayName("Should set Inspiration of ArtProject to the input String value")
-    void setInspirationShouldSetInspirationOfArtProjectToInputStringValue() {
-        artProject.setInspiration("Test inspiration");
-        assertEquals("Test inspiration", artProject.getInspiration());
+    @DisplayName("Should set Inspiration of Project to the input String value")
+    void setInspirationShouldSetInspirationOfProjectToInputStringValue() {
+        project.setInspiration("Test inspiration");
+        assertEquals("Test inspiration", project.getInspiration());
     }
 
     @Test
-    @DisplayName("Should set Width of ArtProject to int input")
-    void setWidthShouldSetWidthOfArtProjectToInputIntValue() {
-        artProject.setWidth(80);
-        assertEquals(80, artProject.getWidth());
+    @DisplayName("Should set Width of Project to int input")
+    void setWidthShouldSetWidthOfProjectToInputIntValue() {
+        project.setWidth(80);
+        assertEquals(80, project.getWidth());
     }
 
     @Test
-    @DisplayName("Should set Subject of ArtProject to the input String value")
-    void setSubjectShouldSetSubjectOfArtProjectToInputStringValue() {
-        artProject.setSubject("Test subject");
-        assertEquals("Test subject", artProject.getSubject());
+    @DisplayName("Should set Subject of Project to the input String value")
+    void setSubjectShouldSetSubjectOfProjectToInputStringValue() {
+        project.setSubject("Test subject");
+        assertEquals("Test subject", project.getSubject());
     }
 
     @Test
-    @DisplayName("Should set User of ArtProject to the given User")
+    @DisplayName("Should set User of Project to the given User")
     void setUser() {
-        User testUser = new User();
-        artProject.setUser(testUser);
-        assertEquals(testUser, artProject.getUser());
+        Person testPerson = new Person();
+        project.setPerson(testPerson);
+        assertEquals(testPerson, project.getPerson());
     }
 }

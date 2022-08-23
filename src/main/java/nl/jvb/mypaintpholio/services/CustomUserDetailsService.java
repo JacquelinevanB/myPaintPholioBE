@@ -16,8 +16,11 @@ import java.util.Set;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
+    private final PersonService personService;
     @Autowired
-    private PersonService personService;
+    public CustomUserDetailsService(PersonService personService) {
+        this.personService = personService;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) {
