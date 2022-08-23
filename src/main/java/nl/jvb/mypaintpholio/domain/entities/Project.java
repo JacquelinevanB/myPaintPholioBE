@@ -22,7 +22,7 @@ public class Project {
 
     @ManyToOne
     @JoinColumn(name = "person")
-    private Person person;
+    public Person person;
 
     @OneToMany(mappedBy = "project")
     List<Update> update;
