@@ -1,12 +1,14 @@
 package nl.jvb.mypaintpholio.controllers;
 
 import nl.jvb.mypaintpholio.domain.dtos.ProjectDto;
+import nl.jvb.mypaintpholio.domain.entities.Person;
 import nl.jvb.mypaintpholio.domain.entities.Project;
 import nl.jvb.mypaintpholio.services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @CrossOrigin
@@ -21,19 +23,22 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
+    @Transactional
     @GetMapping("/admin")
     public ResponseEntity<List<ProjectDto>> getAllProjects() {
         List<ProjectDto> allProjects = projectService.getAllProjects();
         return ResponseEntity.ok().body(allProjects);
     }
 
+    @Transactional
     @GetMapping("/user/{username}")
-    public ResponseEntity<List<ProjectDto>> getAllProjectsByPersonId(@PathVariable("username") String username) {
+    public ResponseEntity<List<ProjectDto>> getAllProjectsByPersonId(@PathVariable("username")Person person) {
         List<ProjectDto> userProjects;
-        userProjects = projectService.getAllProjectsByPerson(username);
+        userProjects = projectService.getAllProjectsByPerson(person);
         return ResponseEntity.ok().body(userProjects);
     }
 
+    @Transactional
     @GetMapping("/{id}")
     public ResponseEntity<ProjectDto> getProjectById(@PathVariable("id") Long id) {
         ProjectDto oneProject = projectService.getProjectById(id);

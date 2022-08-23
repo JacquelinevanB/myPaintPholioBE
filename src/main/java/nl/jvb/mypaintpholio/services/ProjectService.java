@@ -1,6 +1,7 @@
 package nl.jvb.mypaintpholio.services;
 
 import nl.jvb.mypaintpholio.domain.dtos.ProjectDto;
+import nl.jvb.mypaintpholio.domain.entities.Person;
 import nl.jvb.mypaintpholio.domain.entities.Project;
 import nl.jvb.mypaintpholio.exceptions.RecordNotFoundException;
 import nl.jvb.mypaintpholio.repositories.ProjectRepository;
@@ -40,8 +41,8 @@ public class ProjectService {
         return projectDtoList;
     }
 
-    public List<ProjectDto> getAllProjectsByPerson(String username) {
-        List<Project> projectList = projectRepository.findAllProjectsByPerson(username);
+    public List<ProjectDto> getAllProjectsByPerson(Person person) {
+        List<Project> projectList = projectRepository.findAllProjectsByPerson(person);
         List<ProjectDto> projectDtoList = new ArrayList<>();
         for(Project project : projectList) {
             ProjectDto dto = projectToDto(project);
