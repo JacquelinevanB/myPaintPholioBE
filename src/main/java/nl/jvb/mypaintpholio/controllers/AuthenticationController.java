@@ -26,14 +26,14 @@ public class AuthenticationController {
     private CustomUserDetailsService customUserDetailsService;
 
     @Autowired
-    JwtUtil jwtUtil;
+    private JwtUtil jwtUtil;
 
-    @GetMapping("/authenticated")
+    @GetMapping(value = "/authenticated")
     public ResponseEntity<Object> authenticated(Authentication authentication, Principal principal) {
         return ResponseEntity.ok().body(principal);
     }
 
-    @PostMapping("/authenticate")
+    @PostMapping(value = "/authenticate")
     public ResponseEntity<?> createAuthenticationToken
             (@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         String username = authenticationRequest.getUsername();
