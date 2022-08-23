@@ -34,7 +34,7 @@ public class ProjectService {
         for(Project project : projectList) {
             ProjectDto dto = projectToDto(project);
             if(project.getPerson() != null) {
-                dto.setUserDto(personService.personToDto(project.getPerson()));
+                dto.setPersonDto(personService.personToDto(project.getPerson()));
             }
             projectDtoList.add(dto);
         }
@@ -46,36 +46,42 @@ public class ProjectService {
         List<ProjectDto> projectDtoList = new ArrayList<>();
         for(Project project : projectList) {
             ProjectDto dto = projectToDto(project);
-            dto.setUserDto(personService.personToDto(project.getPerson())); // ---> klopt dit?
+//            dto.setPersonDto(personService.personToDto(project.getPerson()));
             projectDtoList.add(dto);
         }
         return projectDtoList;
-
-//        if (personRepository.findById(username).isPresent()) {
-//
-//        } else {
-//            throw new RecordNotFoundException("Gebruiker en/of projecten zijn niet gevonden.");
-//        }
     }
 
     public ProjectDto getProjectById(Long id) {
-        Project project = projectRepository.findById(id).get();
-        ProjectDto dto = projectToDto(project);
-        if(project.getPerson() != null) {
-            dto.setUserDto(personService.personToDto(project.getPerson()));
+        if (projectRepository.findById(id).isPresent()) {
+            Project project = projectRepository.findById(id).get();
+            ProjectDto dto = projectToDto(project);
+            if(project.getPerson() != null) {
+                dto.setPersonDto(personService.personToDto(project.getPerson()));
+            }
+            return dto;
+        } else {
+            throw new RecordNotFoundException("Project is niet gevonden.");
         }
-        return dto;
-//        if (artProjectRepository.findById(id).isPresent()) {
-//
-//        } else {
-//            throw new RecordNotFoundException("Project is niet gevonden.");
-//        }
     }
 
     public ProjectDto createProject(ProjectDto projectDto) {
         Project project = dtoToProject(projectDto);
         projectRepository.save(project);
         return projectToDto(project);
+    }
+
+    public ProjectDto createProjectForPerson(ProjectDto projectDto, String username) {
+        if (personRepository.findById(username).isPresent()) {
+            Project project = dtoToProject(projectDto);
+            project.setPerson(personRepository.findById(username).get());
+            projectRepository.save(project);
+            ProjectDto dto = projectToDto(project);
+//            dto.setPersonDto(personService.personToDto(project.getPerson()));
+            return dto;
+        } else {
+            throw new RecordNotFoundException("Gebruiker is niet gevonden.");
+        }
     }
 
     public ProjectDto updateProject(Long id, ProjectDto projectDto) {

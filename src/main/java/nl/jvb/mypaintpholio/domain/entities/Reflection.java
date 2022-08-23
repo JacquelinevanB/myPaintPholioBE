@@ -3,13 +3,13 @@ package nl.jvb.mypaintpholio.domain.entities;
 import javax.persistence.*;
 
 @Entity
-public class Update {
+public class Reflection {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String reflexionText;
-    private String date;
+    private String dateMade;
     private int sequenceNumber;
 
     @OneToOne
@@ -17,7 +17,7 @@ public class Update {
 
     @ManyToOne
     @JoinColumn(name = "project")
-    private Project project;
+    public Project project;
 
     public Long getId() {
         return id;
@@ -27,8 +27,8 @@ public class Update {
         return reflexionText;
     }
 
-    public String getDate() {
-        return date;
+    public String getDateMade() {
+        return dateMade;
     }
 
     public int getSequenceNumber() {
@@ -51,8 +51,8 @@ public class Update {
         this.reflexionText = reflexionText;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDateMade(String dateMade) {
+        this.dateMade = dateMade;
     }
 
     public void setSequenceNumber(int sequenceNumber) {

@@ -25,7 +25,7 @@ public class Project {
     public Person person;
 
     @OneToMany(mappedBy = "project")
-    List<Update> update;
+    public List<Reflection> reflection;
 
     public Long getId() {
         return id;
@@ -75,8 +75,8 @@ public class Project {
         return person;
     }
 
-    public List<Update> getUpdate() {
-        return update;
+    public List<Reflection> getReflection() {
+        return reflection;
     }
 
     public void setId(Long id) {
@@ -127,7 +127,7 @@ public class Project {
         this.person = person;
     }
 
-    public void setUpdate(List<Update> update) {
-        this.update = update;
+    public void setReflection(List<Reflection> reflection) {
+        this.reflection = reflection;
     }
 }

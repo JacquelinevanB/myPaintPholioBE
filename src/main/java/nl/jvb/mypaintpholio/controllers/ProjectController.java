@@ -48,8 +48,13 @@ public class ProjectController {
     @PostMapping("/add_project")
     public ResponseEntity<ProjectDto> createProject(@RequestBody ProjectDto projectDto) {
         ProjectDto newProject = projectService.createProject(projectDto);
-//        final URI location = URI.create("/projects/" + newProject.getId());
-//        final URI location = URI.create("/users/" + newProject.getUserId() + "/" + newProject.getId());
+        return ResponseEntity.ok().body(newProject);
+    }
+
+    @PostMapping("/add_project/{username}")
+    public ResponseEntity<ProjectDto> createProjectForPerson(@RequestBody ProjectDto projectDto,
+                                                    @PathVariable ("username") String username) {
+        ProjectDto newProject = projectService.createProjectForPerson(projectDto, username);
         return ResponseEntity.ok().body(newProject);
     }
 
