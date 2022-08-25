@@ -38,10 +38,6 @@ public abstract class User {
             fetch = FetchType.EAGER)
     private Set<Authority> authorities = new HashSet<>();
 
-    @OneToOne
-    FileUploadResponse file;
-
-
     public String getUsername() {
         return username;
     }
@@ -72,10 +68,6 @@ public abstract class User {
 
     public Set<Authority> getAuthorities() {
         return authorities;
-    }
-
-    public FileUploadResponse getFile() {
-        return file;
     }
 
     public void setUsername(String username) {
@@ -110,7 +102,5 @@ public abstract class User {
 
     public void removeAuthority(Authority authority) { this.authorities.remove(authority); }
 
-    public void setFile(FileUploadResponse file) {
-        this.file = file;
-    }
+
 }

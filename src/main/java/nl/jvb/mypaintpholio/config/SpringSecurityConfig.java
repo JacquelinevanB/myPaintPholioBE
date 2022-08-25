@@ -67,11 +67,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/projects/{id}").hasAnyRole("ADMIN", "USER")
                 .antMatchers(HttpMethod.DELETE, "/projects/{id}").hasAnyRole("ADMIN", "USER")
 
-                .antMatchers(HttpMethod.GET,"/updates/admin").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET,"/updates/project/{project_id}").hasAnyRole("ADMIN", "USER")
-                .antMatchers(HttpMethod.POST, "/updates/{id}").hasAnyRole("ADMIN", "USER")
-                .antMatchers(HttpMethod.PUT, "/updates/{id}").hasAnyRole("ADMIN", "USER")
-                .antMatchers(HttpMethod.DELETE, "/updates/{id}").hasAnyRole("ADMIN", "USER")
+                .antMatchers(HttpMethod.GET,"/reflections/admin").hasAnyRole("ADMIN", "USER")
+                .antMatchers(HttpMethod.GET,"/reflections/project/{project_id}").hasAnyRole("ADMIN", "USER")
+                .antMatchers(HttpMethod.POST, "/reflections/{id}").hasAnyRole("ADMIN", "USER")
+                .antMatchers(HttpMethod.PUT, "/reflections/{id}").hasAnyRole("ADMIN", "USER")
+                .antMatchers(HttpMethod.DELETE, "/reflections/{id}").hasAnyRole("ADMIN", "USER")
 
                 .antMatchers(HttpMethod.GET,"/quotes/random").permitAll()
                 .antMatchers(HttpMethod.GET,"/quotes/admin").hasRole("ADMIN")
