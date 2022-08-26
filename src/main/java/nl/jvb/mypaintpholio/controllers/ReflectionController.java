@@ -28,7 +28,7 @@ public class ReflectionController {
     }
 
     @Transactional
-    @GetMapping("/admin")
+    @GetMapping("/all")
     public ResponseEntity<List<ReflectionDto>> getAllReflections() {
         List<ReflectionDto> allReflections = reflectionService.getAllReflections();
         return ResponseEntity.ok().body(allReflections);

@@ -2,34 +2,30 @@ package nl.jvb.mypaintpholio.domain.dtos;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import nl.jvb.mypaintpholio.domain.entities.Authority;
+import nl.jvb.mypaintpholio.domain.entities.FileUploadResponse;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 public class PersonDto {
-    @NotEmpty
     public String username;
 
-    @NotEmpty
     public String password;
 
-    @NotEmpty
     public Boolean enabled;
 
     public String apiKey;
 
-    @NotEmpty
     public String firstName;
 
-    @NotEmpty
     public String lastName;
 
-    @NotEmpty
-    @Email
     public String emailAddress;
     @JsonSerialize
     public Set<Authority> authorities;
+
+    public FileUploadResponse file;
 
 
     public String getUsername() {
@@ -64,6 +60,10 @@ public class PersonDto {
         return authorities;
     }
 
+    public FileUploadResponse getFile() {
+        return file;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -94,5 +94,9 @@ public class PersonDto {
 
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public void setFileUploadResponse(FileUploadResponse file) {
+        this.file = file;
     }
 }
