@@ -40,7 +40,11 @@ public class PersonService {
         List<Person> personList = personRepository.findAll();
         List<PersonDto> personDtoList = new ArrayList<>();
         for(Person person : personList) {
-            personDtoList.add(personToDto(person));
+            PersonDto dto = personToDto(person);
+            if (person.getFile() != null) {
+                dto.setFileUploadResponse(person.getFile());
+            }
+            personDtoList.add(dto);
         }
         return personDtoList;
     }
@@ -48,9 +52,13 @@ public class PersonService {
     public PersonDto getUserById(String username) {
         if (personRepository.findById(username).isPresent()) {
             Person person = personRepository.findById(username).get();
-            return personToDto(person);
+            PersonDto dto = personToDto(person);
+            if (person.getFile() != null) {
+                dto.setFileUploadResponse(person.getFile());
+            }
+            return dto;
         } else {
-            throw new RecordNotFoundException("Geen gebruiker '" + username + "' gevonden.");
+            throw new RecordNotFoundException("Geen gebruiker met deze gebruikersnaam gevonden.");
         }
     }
 
@@ -72,13 +80,20 @@ public class PersonService {
         return person.getUsername();
     }
 
+    public void updatePassword(String username, CreatePersonDto createPersonDto) {
+        if (!personRepository.existsById(username))throw new UsernameNotFoundException(username);
+        Person person = personRepository.findById(username).get();
+        person.setPassword(createPersonDto.getPassword());
+        personRepository.save(person);
+    }
+
     public void updatePerson(String username, CreatePersonDto createPersonDto) {
-        if (personRepository.findById(username).isPresent()) {
-            Person updatedPerson = createNewPerson(createPersonDto);
-            personRepository.save(updatedPerson);
-        } else {
-            throw new RecordNotFoundException("Geen gebruiker gevonden.");
-        }
+        if (!personRepository.existsById(username))throw new UsernameNotFoundException(username);
+        Person person = personRepository.findById(username).get();
+        person.setFirstName(createPersonDto.getFirstName());
+        person.setLastName(createPersonDto.getLastName());
+        person.setEmailAddress(createPersonDto.getEmailAddress());
+        personRepository.save(person);
     }
 
     public void deletePersonById(String username) {

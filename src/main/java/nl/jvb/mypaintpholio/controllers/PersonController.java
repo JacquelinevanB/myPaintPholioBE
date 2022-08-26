@@ -31,7 +31,7 @@ public class PersonController {
         this.fileUploadController = fileUploadController;
     }
 
-    @GetMapping("/admin")
+    @GetMapping("/all")
     @Transactional
     public ResponseEntity<List<PersonDto>> getAllUsers() {
         List<PersonDto> allUsers = personService.getAllUsers();
@@ -47,9 +47,8 @@ public class PersonController {
 
     @GetMapping("/{username}/authorities")
     @Transactional
-    public ResponseEntity<PersonDto> getUserAuthorities(@PathVariable("username") String username) {
-        PersonDto oneUser = personService.getUserById(username);
-        return ResponseEntity.ok().body(oneUser);
+    public ResponseEntity<Object> getUserAuthorities(@PathVariable("username") String username) {
+        return ResponseEntity.ok().body(personService.getAuthorities(username));
     }
 
     @PostMapping("/register")
@@ -70,6 +69,14 @@ public class PersonController {
             @PathVariable("username") String username,
             @RequestBody CreatePersonDto createPersonDto) {
         personService.updatePerson(username, createPersonDto);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{username}/password")
+    public ResponseEntity<Object> updatePassword(
+            @PathVariable("username") String username,
+            @RequestBody CreatePersonDto createPersonDto) {
+        personService.updatePassword(username, createPersonDto);
         return ResponseEntity.noContent().build();
     }
 

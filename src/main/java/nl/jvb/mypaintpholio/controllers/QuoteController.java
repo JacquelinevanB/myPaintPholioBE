@@ -22,7 +22,7 @@ public class QuoteController {
         this.quoteService = quoteService;
     }
 
-    @GetMapping("/admin")
+    @GetMapping("/all")
     public ResponseEntity<List<QuoteDto>> getAllQuotes() {
         List<QuoteDto> allQuotes = quoteService.getAllQuotes();
         return ResponseEntity.ok().body(allQuotes);

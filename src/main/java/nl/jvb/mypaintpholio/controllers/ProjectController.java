@@ -24,7 +24,7 @@ public class ProjectController {
     }
 
     @Transactional
-    @GetMapping("/admin")
+    @GetMapping("/all")
     public ResponseEntity<List<ProjectDto>> getAllProjects() {
         List<ProjectDto> allProjects = projectService.getAllProjects();
         return ResponseEntity.ok().body(allProjects);

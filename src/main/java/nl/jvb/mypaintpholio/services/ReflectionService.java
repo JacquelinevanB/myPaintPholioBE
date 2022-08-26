@@ -58,6 +58,9 @@ public class ReflectionService {
             List<ReflectionDto> reflectionDtoList = new ArrayList<>();
             for(Reflection reflection : reflectionList) {
                 ReflectionDto dto = reflectionToDto(reflection);
+                if(reflection.getFile() != null) {
+                    dto.setFileUploadResponse(reflection.getFile());
+                }
                 dto.setProjectDto(projectService.projectToDto(reflection.getProject()));
                 reflectionDtoList.add(dto);
             }
