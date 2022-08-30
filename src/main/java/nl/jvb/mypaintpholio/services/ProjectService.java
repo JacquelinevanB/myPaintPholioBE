@@ -84,16 +84,20 @@ public class ProjectService {
         }
     }
 
-    public ProjectDto updateProject(Long id, ProjectDto projectDto) {
-        if (projectRepository.findById(id).isPresent()) {
-            Project oldInfo = projectRepository.findById(id).get();
-            Project newInfo = dtoToProject(projectDto);
-            newInfo.setId(oldInfo.getId());
-            projectRepository.save(newInfo);
-            return projectToDto(newInfo);
-        } else {
-            throw new RecordNotFoundException("Project is niet gevonden.");
-        }
+    public void updateProject(Long id, ProjectDto dto) {
+        if (!projectRepository.existsById(id))throw new RecordNotFoundException();
+        Project project = projectRepository.findById(id).get();
+        project.setTitle(dto.getTitle());
+        project.setMediumType(dto.getMediumType());
+        project.setDateStart(dto.getDateStart());
+        project.setDateEnd(dto.getDateEnd());
+        project.setInspiration(dto.getInspiration());
+        project.setHeight(dto.getHeight());
+        project.setWidth(dto.getWidth());
+        project.setDescription(dto.getDescription());
+        project.setSubject(dto.getSubject());
+        project.setFinished(dto.getFinished());
+        projectRepository.save(project);
     }
 
     public void deleteProjectById(Long id) {

@@ -20,13 +20,13 @@ import java.util.Objects;
 @Service
 public class FileUploadService {
 
-    @Value("/Users/jacqu/IdeaProjects/myPaintPholioBE/uploads")
+    @Value("${my.upload_location}")
     private Path fileStoragePath;
     private final String fileStorageLocation;
 
     private final FileUploadRepository fileUploadRepository;
 
-    public FileUploadService(@Value("/Users/jacqu/IdeaProjects/myPaintPholioBE/uploads")
+    public FileUploadService(@Value("${my.upload_location}")
                              String fileStorageLocation,
                              FileUploadRepository fileUploadRepository) {
         fileStoragePath = Paths.get(fileStorageLocation).toAbsolutePath().normalize();

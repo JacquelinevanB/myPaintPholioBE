@@ -59,8 +59,8 @@ public class ReflectionController {
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateReflection(@PathVariable("id") Long id,
                                               @RequestBody ReflectionDto reflectionDto) {
-        ReflectionDto reflection = reflectionService.updateReflection(id, reflectionDto);
-        return ResponseEntity.ok().body(reflection);
+        reflectionService.updateReflection(id, reflectionDto);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")

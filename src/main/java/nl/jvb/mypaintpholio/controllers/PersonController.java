@@ -86,7 +86,7 @@ public class PersonController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{username}/authorities")
+    @PostMapping("/{username}/authorities")
     public ResponseEntity<Object> addUserAuthority(
             @PathVariable("username") String username,
             @RequestBody Map<String, Object> fields) {

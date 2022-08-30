@@ -3,30 +3,27 @@ package nl.jvb.mypaintpholio.domain.dtos;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import nl.jvb.mypaintpholio.domain.entities.Authority;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 public class CreatePersonDto {
 
-//    @NotEmpty
+    @NotEmpty
     public String username;
 
-//    @NotEmpty
-//    @Size(min = 8)
+    @NotEmpty
+    @Size(min = 8)
     public String password;
 
-//    @NotEmpty
     public Boolean enabled;
 
     public String apiKey;
 
-//    @NotEmpty
     public String firstName;
 
-//    @NotEmpty
     public String lastName;
 
-//    @NotEmpty
-//    @Email
     public String emailAddress;
     @JsonSerialize
     public Set<Authority> authorities;
