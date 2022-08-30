@@ -24,7 +24,7 @@ public class Project {
     @JoinColumn(name = "person")
     public Person person;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     public List<Reflection> reflection;
 
     public Long getId() {
