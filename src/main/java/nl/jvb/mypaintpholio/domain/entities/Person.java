@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 public class Person extends User {
 
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "person", cascade = CascadeType.REMOVE)
     List<Project> projects;
 
     @OneToOne

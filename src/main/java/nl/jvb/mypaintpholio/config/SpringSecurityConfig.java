@@ -63,8 +63,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/projects/all").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET,"/projects/user/{username}").hasAnyRole("ADMIN", "USER")
                 .antMatchers(HttpMethod.GET,"/projects/{id}").hasAnyRole("ADMIN", "USER")
-                .antMatchers(HttpMethod.POST, "/projects/add_project").hasAnyRole("ADMIN", "USER")
-                .antMatchers(HttpMethod.PUT, "/projects/{id}/{username}").hasAnyRole("ADMIN", "USER")
+                .antMatchers(HttpMethod.POST, "/projects/add_project").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/projects/add_project/{username}").hasAnyRole("ADMIN", "USER")
+                .antMatchers(HttpMethod.PUT, "/projects/{id}/{username}").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/projects/{id}").hasAnyRole("ADMIN", "USER")
                 .antMatchers(HttpMethod.DELETE, "/projects/{id}").hasAnyRole("ADMIN", "USER")
 
@@ -79,6 +80,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST,"/quotes/add_quote").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT,"/quotes/{id}").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE,"/quotes/{id}").hasRole("ADMIN")
+
+                .antMatchers(HttpMethod.GET,"/upload").hasAnyRole("ADMIN", "USER")
+                .antMatchers(HttpMethod.POST, "/download/{fileName}").hasAnyRole("ADMIN", "USER")
 
                 .antMatchers("/authenticated").authenticated()
                 .antMatchers("/authenticate").permitAll()
