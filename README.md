@@ -66,7 +66,7 @@ zijn om deze op het scherm weer te geven. De reflectietekst bij de foto kan gele
 twee foto’s van werkmomenten naast elkaar te vergelijken. Tenslotte kan dat wat is ingevoerd bij project en reflectie 
 te allen tijde worden aangepast of aangevuld. 
 
-![](uploads\Landingpage1.png) 
+![](uploads/Landingpage1.png) 
 
 #### Jacqueline van Burk | copyright © augustus 2022 | Eindopdracht Bootcamp Fullstack Developer
 
