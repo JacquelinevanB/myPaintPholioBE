@@ -1,5 +1,5 @@
 ﻿# My PaintPholio 
-![](https://github.com/[JacquelinevanB]/[myPaintPholioBE]/blob/[main]/mypaintpholio.png?raw=true)  
+![](/updates/mypaintpholio.png)  
 
 My PaintPholio is een portfolio applicatie die hobbymatige kunstenaars wil helpen hun projecten digitaal te tracken.
 My PaintPholio is ontworpen en gecodeerd in het kader van de Bootcamp Fullstack Developer van Novi Hogeschool.
