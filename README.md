@@ -1,5 +1,5 @@
 ﻿# My PaintPholio 
-![](uploads/mypaintpholio.png)  
+ ![](uploads/MyPaintPholioLogo.png) 
 
 My PaintPholio is een portfolio applicatie die hobbymatige kunstenaars wil helpen hun projecten digitaal te tracken.
 My PaintPholio is ontworpen en gecodeerd in het kader van de Bootcamp Fullstack Developer van Novi Hogeschool.
@@ -47,7 +47,7 @@ Deze data kan gebruikt worden in combinatie met de volgende accounts:
 Door in te loggen met het admin account krijg je beeld van het admindashboard.
 Via het account van de user ervaar je de kernfunctionaliteit van de applicatie. 
 
-![](C:\Users\jacqu\Documents\Jacqueline\Novi\Fullstack\mypaintpholiosmall.png)
+![](uploads/mypaintpholio.png) 
 
 ## Probleemstelling en oplossing
 Super leuk en praktisch om foto's te nemen van tussenfases van je schilderwerk om te zien welke ontwikkeling je doormaakt. 
@@ -66,7 +66,7 @@ zijn om deze op het scherm weer te geven. De reflectietekst bij de foto kan gele
 twee foto’s van werkmomenten naast elkaar te vergelijken. Tenslotte kan dat wat is ingevoerd bij project en reflectie 
 te allen tijde worden aangepast of aangevuld. 
 
-![](C:\Users\jacqu\Documents\Jacqueline\Novi\Fullstack\Landingpage1.png) 
+![](uploads\Landingpage1.png) 
 
 #### Jacqueline van Burk | copyright © augustus 2022 | Eindopdracht Bootcamp Fullstack Developer
 
