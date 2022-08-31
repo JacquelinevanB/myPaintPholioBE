@@ -82,7 +82,7 @@ public class ReflectionService {
             }
             return dto;
         } else {
-            throw new RecordNotFoundException("Projectupdate is niet gevonden.");
+            throw new RecordNotFoundException("Reflectie is niet gevonden.");
         }
     }
 
@@ -99,16 +99,12 @@ public class ReflectionService {
         }
     }
 
-    public ReflectionDto updateReflection(Long id, ReflectionDto reflectionDto) {
-        if (reflectionRepository.findById(id).isPresent()) {
-            Reflection oldInfo = reflectionRepository.findById(id).get();
-            Reflection newInfo = dtoToReflection(reflectionDto);
-            newInfo.setId(oldInfo.getId());
-            reflectionRepository.save(newInfo);
-            return reflectionToDto(newInfo);
-        } else {
-            throw new RecordNotFoundException("Projectupdate is niet gevonden.");
-        }
+    public void updateReflection(Long id, ReflectionDto reflectionDto) {
+        if (!reflectionRepository.existsById(id))throw new RecordNotFoundException();
+        Reflection reflection = reflectionRepository.findById(id).get();
+        reflection.setDateMade(reflectionDto.getDateMade());
+        reflection.setReflexionText(reflectionDto.getReflectionText());
+        reflectionRepository.save(reflection);
     }
 
     public void deleteReflectionById(Long id) {

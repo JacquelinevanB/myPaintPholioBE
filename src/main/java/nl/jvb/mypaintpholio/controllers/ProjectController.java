@@ -66,8 +66,8 @@ public class ProjectController {
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateProject(@PathVariable("id") Long id,
                                                    @RequestBody ProjectDto projectDto) {
-        ProjectDto dto = projectService.updateProject(id, projectDto);
-        return ResponseEntity.ok().body(dto);
+        projectService.updateProject(id, projectDto);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
