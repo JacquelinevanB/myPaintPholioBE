@@ -47,7 +47,7 @@ Deze data kan gebruikt worden in combinatie met de volgende accounts:
 Door in te loggen met het admin account krijg je beeld van het admindashboard.
 Via het account van de user ervaar je de kernfunctionaliteit van de applicatie. 
 
-![](uploads/mypaintpholio.png) 
+![](uploads/Landingpage1.png) 
 
 ## Probleemstelling en oplossing
 Super leuk en praktisch om foto's te nemen van tussenfases van je schilderwerk om te zien welke ontwikkeling je doormaakt. 
@@ -66,7 +66,7 @@ zijn om deze op het scherm weer te geven. De reflectietekst bij de foto kan gele
 twee foto’s van werkmomenten naast elkaar te vergelijken. Tenslotte kan dat wat is ingevoerd bij project en reflectie 
 te allen tijde worden aangepast of aangevuld. 
 
-![](uploads/Landingpage1.png) 
+![](uploads/mypaintpholio.png) 
 
 #### Jacqueline van Burk | copyright © augustus 2022 | Eindopdracht Bootcamp Fullstack Developer
 
