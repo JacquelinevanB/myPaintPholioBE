@@ -9,25 +9,19 @@ import java.util.Set;
 public abstract class User {
 
     @Id
-//    @Column(nullable = false, unique = true)
+
     private String username;
 
-//    @Column(nullable = false)
     private String password;
 
-//    @Column(nullable = false)
     private Boolean enabled = true;
 
-//    @Column
     private String apiKey;
 
-//    @Column(nullable = false)
     private String firstName;
 
-//    @Column(nullable = false)
     private String lastName;
 
-//    @Column(nullable = false)
     private String emailAddress;
 
     @OneToMany(

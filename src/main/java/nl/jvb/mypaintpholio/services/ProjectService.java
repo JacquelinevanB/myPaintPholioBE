@@ -46,7 +46,6 @@ public class ProjectService {
         List<ProjectDto> projectDtoList = new ArrayList<>();
         for(Project project : projectList) {
             ProjectDto dto = projectToDto(project);
-//            dto.setPersonDto(personService.personToDto(project.getPerson()));
             projectDtoList.add(dto);
         }
         return projectDtoList;
@@ -77,7 +76,6 @@ public class ProjectService {
             project.setPerson(personRepository.findById(username).get());
             projectRepository.save(project);
             ProjectDto dto = projectToDto(project);
-//            dto.setPersonDto(personService.personToDto(project.getPerson()));
             return dto;
         } else {
             throw new RecordNotFoundException("Gebruiker is niet gevonden.");
